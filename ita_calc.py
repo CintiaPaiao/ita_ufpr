@@ -163,9 +163,9 @@ def calcular_ita_final(df: pd.DataFrame) -> pd.DataFrame:
     ) / soma_pesos
 
     conditions = [
-        df["ITA"] < 0.3,
-        df["ITA"].between(0.3, 0.6, inclusive="both"),
-        df["ITA"] > 0.6
+        df["ITA"] < 30,
+        df["ITA"].between(30, 60, inclusive="both"),
+        df["ITA"] > 60
     ]
     classes = ["baixo risco", "risco moderado", "risco alto"]
 
