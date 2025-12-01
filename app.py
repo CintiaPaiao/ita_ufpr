@@ -56,7 +56,7 @@ if st.button("Calcular ITA"):
                 cursos = df_ITA["curso"].unique().tolist() if "curso" in df_result.columns else []
                 selected_cursos = st.sidebar.multiselect("Filtrar por Curso", options=cursos, default=cursos)
                 
-                Filter by Risk Classification
+                # Filter by Risk Classification
                 classificacoes = df_result["classificacao_ita"].unique().tolist() if "classificacao_ita" in df_result.columns else []
                 selected_classificacoes = st.sidebar.multiselect("Filtrar por Classificação de Risco", options=classificacoes, default=classificacoes)
 
