@@ -87,9 +87,9 @@ if st.button("Calcular ITA"):
                 col2.metric("Média do ITA", f"{media_ita:.2f}")
                 col3.metric("Alunos em Alto Risco", alunos_alto_risco)
                 
-                if "IRA SEM" in df_filtered.columns:
-                      media_ira = pd.to_numeric(df_filtered["IRA SEM"], errors='coerce').mean()
-                     col4.metric("Média IRA Semestral", f"{media_ira:.2f}")
+                #if "IRA SEM" in df_filtered.columns:
+                #      media_ira = pd.to_numeric(df_filtered["IRA SEM"], errors='coerce').mean()
+                #     col4.metric("Média IRA Semestral", f"{media_ira:.2f}")
 
                 # Charts Row 1
                 st.subheader("Distribuição e Classificação")
