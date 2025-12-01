@@ -15,13 +15,13 @@ Certifique-se de que os links terminam com `export?format=xlsx` ou são links di
 
 # Default URLs from the notebook for convenience
 default_main = "https://docs.google.com/spreadsheets/d/1cpXhYwbhTlIexWjTprVITGAJA8jXMU83/export?format=xlsx"
-default_criteria = "https://docs.google.com/spreadsheets/d/1fmyyHKp38u5CM0G3GYa-gbPbvokt4_SZ/export?format=xlsx"
+default_criteria = "https://docs.google.com/spreadsheets/d/12Qjx_6-2Bed0cSXH57H3d2xrL-UP-JArwsEu5ys5WiQ/export?format=xlsx"
 default_form = "https://docs.google.com/spreadsheets/d/1HINITMZMllcojXwgq8gOwt_P6dK6MnOe/export?format=xlsx"
 
 url_main = st.text_input("URL da Planilha Completa", value=default_main)
-url_criteria = st.text_input("URL da Planilha de Critérios (Social/Psicologia/Geral)", value=default_criteria)
+url_criteria = st.text_input("URL da Planilha de Critérios (Social/Psicologia/pedagogia)", value=default_criteria)
 url_form = st.text_input("URL da Planilha de Formulário", value=default_form)
-
+ 
 if st.button("Calcular ITA"):
     if not url_main or not url_criteria or not url_form:
         st.error("Por favor, preencha todos os campos de URL.")

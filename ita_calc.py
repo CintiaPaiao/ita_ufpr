@@ -90,7 +90,7 @@ def _to_bool_aval2024(s: pd.Series) -> pd.Series:
 
 def aplicar_indicador_acomp_adesao(
     df: pd.DataFrame,
-    status_col: str = "A/O ESTUDANTE ATENDE AOS CRITÉRIOS? (Sim ou Não)",
+    status_col: str = "A/O ESTUDANTE ATENDE AOS CRITÉRIOS? (Sim ou Não)",
     avaliacao2024_col: str = "esteve-na-avaliacao-2024",
     chi_col: str = "ch_media_esperada",
     out_score_col: str = "indicador-acomp-adesao",
@@ -128,15 +128,16 @@ def aplicar_indicador_acomp_adesao(
         (esteve2024) & (status == "NÃO"),    # 5
         (esteve2024) & (status.isna()),      # 6 (em branco)
     ]
-    scores = [0.0, 0.2, 0.6, 0.8, 0.1, 1.0, 0.9]
+    scores = [0.0, 2, 6, 8, 1, 1, 9]
     classes = [
-        "Sem risco / não pontua",
-        "Estável",
-        "Em alerta",
-        "Prioridade de inserção",
-        "Estável",
-        "Crítico / penalização máxima",
-        "Prioridade de convocação",
+         "Ingressante / não pontua",                              # 0
+        "Estável (em acompanhamento)",                          # 1
+        "Em alerta (sem adesão ao acompanhamento)",             # 2
+        "Prioridade de inserção em acompanhamento",             # 3
+        "Estável (em acompanhamento)",                          # 4
+        "Crítico (não aderiu após avaliação 2024)",             # 5
+        "Prioridade de convocação / sem acompanhamento",        # 6
+
     ]
 
     out[out_score_col] = np.select(conditions, scores, default=np.nan).astype(float)
@@ -180,7 +181,7 @@ def calculate_ita(file_path, file_path_crite, file_paht_form):
         df = pd.read_excel(file_path, sheet_name="PLANILHA COMPLETA")
         df_social = pd.read_excel(file_path_crite, sheet_name="Serviço Social")
         df_psicologia = pd.read_excel(file_path_crite, sheet_name="Psicologia")
-        df_geral = pd.read_excel(file_path_crite, sheet_name="Geral")
+        df_pedagogia = pd.read_excel(file_path_crite, sheet_name="Pedagogia")
         df_form_ = pd.read_excel(file_paht_form, sheet_name="Sheet1")
     except Exception as e:
         raise ValueError(f"Erro ao ler planilhas: {e}")
@@ -332,13 +333,13 @@ def calculate_ita(file_path, file_path_crite, file_paht_form):
     # -------- 1. Remover duplicatas dentro de cada df ----------
     df_social_unique = df_social.drop_duplicates(subset="GRR", keep="last")
     df_psicologia_unique = df_psicologia.drop_duplicates(subset="GRR", keep="last")
-    df_geral_unique = df_geral.drop_duplicates(subset="GRR", keep="last")
+    df_pedagogia_unique = df_pedagogia.drop_duplicates(subset="GRR", keep="last")
 
-    # -------- 2. Unir as três bases de Serviço Social, Psicologia e Geral ----------
+    # -------- 2. Unir as três bases de Serviço Social, Psicologia e pedagogia ----------
     df_servicos_unificado = (
         df_social_unique
             .merge(df_psicologia_unique, on="GRR", how="outer")
-            .merge(df_geral_unique, on="GRR", how="outer")
+            .merge(df_pedagogia_unique, on="GRR", how="outer")
     )
 
     # -------- 3. Agora sim, fazer o merge com df_detalhado ----------
