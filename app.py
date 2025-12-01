@@ -79,17 +79,17 @@ if st.button("Calcular ITA"):
                 # Metrics Row
                 col1, col2, col3, col4 = st.columns(4)
                 
-                total_alunos = len(df_filtered)
-                media_ita = df_filtered["ITA"].mean() if "ITA" in df_filtered.columns else 0
-                alunos_alto_risco = len(df_filtered[df_filtered["classificacao_ita"] == "risco alto"]) if "classificacao_ita" in df_filtered.columns else 0
+                #total_alunos = len(df_filtered)
+                #media_ita = df_filtered["ITA"].mean() if "ITA" in df_filtered.columns else 0
+                #alunos_alto_risco = len(df_filtered[df_filtered["classificacao_ita"] == "risco alto"]) if "classificacao_ita" in df_filtered.columns else 0
                 
-                col1.metric("Total de Alunos", total_alunos)
-                col2.metric("Média do ITA", f"{media_ita:.2f}")
-                col3.metric("Alunos em Alto Risco", alunos_alto_risco)
+                #col1.metric("Total de Alunos", total_alunos)
+                #col2.metric("Média do ITA", f"{media_ita:.2f}")
+                #col3.metric("Alunos em Alto Risco", alunos_alto_risco)
                 
-                if "IRA SEM" in df_filtered.columns:
-                     media_ira = pd.to_numeric(df_filtered["IRA SEM"], errors='coerce').mean()
-                     col4.metric("Média IRA Semestral", f"{media_ira:.2f}")
+                #if "IRA SEM" in df_filtered.columns:
+                #      media_ira = pd.to_numeric(df_filtered["IRA SEM"], errors='coerce').mean()
+                #     col4.metric("Média IRA Semestral", f"{media_ira:.2f}")
 
                 # Charts Row 1
                 st.subheader("Distribuição e Classificação")
@@ -98,29 +98,29 @@ if st.button("Calcular ITA"):
                 import plotly.express as px
                 
                 with c1:
-                    if "classificacao_ita" in df_filtered.columns:
-                        fig_pie = px.pie(df_filtered, names="classificacao_ita", title="Distribuição por Classificação de Risco", hole=0.4, color_discrete_sequence=px.colors.qualitative.Set2)
-                        st.plotly_chart(fig_pie, use_container_width=True)
+                    #if "classificacao_ita" in df_filtered.columns:
+                    #    fig_pie = px.pie(df_filtered, names="classificacao_ita", title="Distribuição por Classificação de Risco", hole=0.4, color_discrete_sequence=px.colors.qualitative.Set2)
+                    #    st.plotly_chart(fig_pie, use_container_width=True)
                 
                 with c2:
-                    if "curso" in df_filtered.columns:
-                        # Count per course
-                        df_course_count = df_filtered["curso"].value_counts().reset_index()
-                        df_course_count.columns = ["curso", "count"]
-                        fig_bar = px.bar(df_course_count, x="curso", y="count", title="Alunos por Curso", color="curso", text="count")
-                        st.plotly_chart(fig_bar, use_container_width=True)
+                    #if "curso" in df_filtered.columns:
+                    #    # Count per course
+                    #    df_course_count = df_filtered["curso"].value_counts().reset_index()
+                    #    df_course_count.columns = ["curso", "count"]
+                    #    fig_bar = px.bar(df_course_count, x="curso", y="count", title="Alunos por Curso", color="curso", text="count")
+                    #    st.plotly_chart(fig_bar, use_container_width=True)
 
                 # Charts Row 2
                 st.subheader("Análise Detalhada")
                 c3, c4 = st.columns(2)
                 
                 with c3:
-                    if "ITA" in df_filtered.columns:
-                        fig_hist = px.histogram(df_filtered, x="ITA", nbins=20, title="Distribuição das Notas do ITA", color_discrete_sequence=['#636EFA'])
-                        st.plotly_chart(fig_hist, use_container_width=True)
+                    #if "ITA" in df_filtered.columns:
+                    #    fig_hist = px.histogram(df_filtered, x="ITA", nbins=20, title="Distribuição das Notas do ITA", color_discrete_sequence=['#636EFA'])
+                    #    st.plotly_chart(fig_hist, use_container_width=True)
 
                 with c4:
-                     if "ITA" in df_filtered.columns and "nota_final" in df_filtered.columns:
+                    #if "ITA" in df_filtered.columns and "nota_final" in df_filtered.columns:
                         fig_scatter = px.scatter(df_filtered, x="nota_final", y="ITA", color="classificacao_ita", title="Correlação: Nota Final vs ITA", hover_data=["NOME"])
                         st.plotly_chart(fig_scatter, use_container_width=True)
 
