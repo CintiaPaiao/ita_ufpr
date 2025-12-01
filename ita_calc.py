@@ -128,7 +128,7 @@ def aplicar_indicador_acomp_adesao(
         (esteve2024) & (status == "NÃO"),    # 5
         (esteve2024) & (status.isna()),      # 6 (em branco)
     ]
-    scores = [0.0, 2, 6, 8, 1, 1, 9]
+    scores = [0.0, 20, 60, 80, 10, 100, 90]
     classes = [
          "Ingressante / não pontua",                              # 0
         "Estável (em acompanhamento)",                          # 1
