@@ -299,22 +299,24 @@ def calculate_ita(file_path, file_path_crite, file_paht_form):
     
     df["nota_final"] = (df[[f"nota_parcial_{k}" for k in pesos.keys()]].sum(axis=1)*10).round(2)
 
-    # 10. Ordenação e Merge
-    colunas_id = ["GRR", "NOME","SETOR","proafe", "curso", "ano-ingresso" ,"TEMPO UFPR - SEM","IRA SEM","CPF","renda-per-capta","classe-da-renda","nota-da-renda","E-MAIL PESSOAL","E-MAIL INSTITUCIONAL","TELEFONE","MOTIVO","planilha_andre"]
+   
+
+    #colunas_id = ["GRR","CPF", "NOME","E-MAIL PESSOAL","E-MAIL INSTITUCIONAL","TELEFONE","SETOR","curso","proafe","planilha_andre","MOTIVO","renda-per-capta","classe-da-renda","nota-da-renda","ano-ingresso","TEMPO UFPR - SEM"]
+     # 10. Ordenação e Merge
+    colunas_id = ["GRR","CPF", "NOME","SETOR","curso","proafe","planilha_andre","MOTIVO","renda-per-capta","classe-da-renda","nota-da-renda","ano-ingresso","TEMPO UFPR - SEM","IRA SEM","E-MAIL PESSOAL","E-MAIL INSTITUCIONAL","TELEFONE"]
     
     # Ensure columns exist
     for col in colunas_id:
         if col not in df.columns:
             df[col] = np.nan
-
     blocos = [
-        (["porcentagem-aprovacao"], "risco_aprovacao", "peso_aprovacao", "nota_parcial_aprovacao"),
+        (["TEMPO UFPR - SEM", "ch-integralizada", "ch_media_esperada"], "risco_ch_integralizada", "peso_ch_integralizada", "nota_parcial_ch_integralizada"),
+        (["CH ABAIXO", "CH MTO ABAIXO","IRA SEM","porcentagem-aprovacao"], "risco_aprovacao", "peso_aprovacao", "nota_parcial_aprovacao"),
         (["qtd-matriculada","qtd-reprovacao-por-nota","qtd-matricula-cancelada","PORT 5 - CAN",
-          "qtd-rep-frequencia","PORT 5 - FREQ","BAIXA MAT"], "risco_rep_freq", "peso_rep_freq", "nota_parcial_rep_freq"),
+          "qtd-rep-frequencia","PORT 5 - FREQ","BAIXA MAT","% Rep Freq 2024-2","% Rep Freq 2024-1","% Rep Freq 2023 -2"], "risco_rep_freq", "peso_rep_freq", "nota_parcial_rep_freq"),
         (["porcentagem-historica-de-reprovacao-frequencia"], "risco_hist_freq", "peso_hist_freq", "nota_parcial_hist_freq"),
-        (["ch-integralizada","TEMPO UFPR - SEM", "ch_media_esperada","CH REC SEM","CH ABAIXO", "CH MTO ABAIXO"], "risco_ch_integralizada", "peso_ch_integralizada", "nota_parcial_ch_integralizada"),
-        (["apareceu-na-avaliacao-semestre-anterior?"], "risco_historico", "peso_historico", "nota_parcial_historico"),
-        (["responsavel","TEMPO UFPR - SEM","CH MAT TOTAL","% Rep Freq 2024-2","% Rep Freq 2024-1","% Rep Freq 2023 -2","Editais 2023","AVALIAÇÃO 2024","recebeu-probem-ano-anterior?",], "risco_ch_cursada", "peso_ch_cursada", "nota_parcial_ch_cursada"),
+        (["apareceu-na-avaliacao-semestre-anterior?","Editais 2023","AVALIAÇÃO 2024","recebeu-probem-ano-anterior?"], "risco_historico", "peso_historico", "nota_parcial_historico"),
+        (["responsavel","TEMPO UFPR - SEM","CH MAT TOTAL","CH REC SEM"], "risco_ch_cursada", "peso_ch_cursada", "nota_parcial_ch_cursada"),
     ]
 
     ordered_cols = colunas_id.copy()
