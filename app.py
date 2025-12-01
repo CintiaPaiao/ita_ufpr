@@ -97,12 +97,12 @@ if st.button("Calcular ITA"):
                 
                 import plotly.express as px
                 
-                with c1:
-                    #if "classificacao_ita" in df_filtered.columns:
-                    #    fig_pie = px.pie(df_filtered, names="classificacao_ita", title="Distribuição por Classificação de Risco", hole=0.4, color_discrete_sequence=px.colors.qualitative.Set2)
-                    #    st.plotly_chart(fig_pie, use_container_width=True)
+                #with c1:
+                #    if "classificacao_ita" in df_filtered.columns:
+                #        fig_pie = px.pie(df_filtered, names="classificacao_ita", title="Distribuição por Classificação de Risco", hole=0.4, color_discrete_sequence=px.colors.qualitative.Set2)
+                #        st.plotly_chart(fig_pie, use_container_width=True)
                 
-                with c2:
+                #with c2:
                     #if "curso" in df_filtered.columns:
                     #    # Count per course
                     #    df_course_count = df_filtered["curso"].value_counts().reset_index()
@@ -112,21 +112,21 @@ if st.button("Calcular ITA"):
 
                 # Charts Row 2
                 st.subheader("Análise Detalhada")
-                c3, c4 = st.columns(2)
+                #c3, c4 = st.columns(2)
                 
-                with c3:
-                    #if "ITA" in df_filtered.columns:
+                #with c3:
+                #    if "ITA" in df_filtered.columns:
                     #    fig_hist = px.histogram(df_filtered, x="ITA", nbins=20, title="Distribuição das Notas do ITA", color_discrete_sequence=['#636EFA'])
                     #    st.plotly_chart(fig_hist, use_container_width=True)
 
-                with c4:
-                    #if "ITA" in df_filtered.columns and "nota_final" in df_filtered.columns:
-                        fig_scatter = px.scatter(df_filtered, x="nota_final", y="ITA", color="classificacao_ita", title="Correlação: Nota Final vs ITA", hover_data=["NOME"])
-                        st.plotly_chart(fig_scatter, use_container_width=True)
+                #with c4:
+                #    if "ITA" in df_filtered.columns and "nota_final" in df_filtered.columns:
+                #        fig_scatter = px.scatter(df_filtered, x="nota_final", y="ITA", color="classificacao_ita", title="Correlação: Nota Final vs ITA", hover_data=["NOME"])
+                #        st.plotly_chart(fig_scatter, use_container_width=True)
 
-                st.markdown("---")
-                st.subheader("Tabela de Resultados (Filtrada)")
-                st.dataframe(df_filtered.head(50))
+                #st.markdown("---")
+                #st.subheader("Tabela de Resultados (Filtrada)")
+                #st.dataframe(df_filtered.head(50))
                 
                 # Excel Download (Filtered)
                 #buffer = io.BytesIO()
