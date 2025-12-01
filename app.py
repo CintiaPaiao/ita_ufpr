@@ -23,7 +23,7 @@ url_criteria = st.text_input("URL da Planilha de Critérios (Social/Psicologia/P
 url_form = st.text_input("URL da Planilha de Formulário", value=default_form)
  
 if st.button("Calcular ITA"):
-    if not url_main or not url_criteria: #or not url_form:
+    if not url_main or not url_criteria or not url_form:
         st.error("Por favor, preencha todos os campos de URL.")
     else:
         with st.spinner("Processando planilhas e calculando ITA..."):
