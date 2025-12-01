@@ -301,9 +301,9 @@ def calculate_ita(file_path, file_path_crite, file_paht_form):
 
    
 
-    #colunas_id = ["GRR","CPF", "NOME","E-MAIL PESSOAL","E-MAIL INSTITUCIONAL","TELEFONE","SETOR","curso","proafe","planilha_andre","MOTIVO","renda-per-capta","classe-da-renda","nota-da-renda","ano-ingresso","TEMPO UFPR - SEM"]
+    colunas_id = ["GRR","CPF", "NOME","E-MAIL PESSOAL","E-MAIL INSTITUCIONAL","TELEFONE","SETOR","curso","proafe","planilha_andre","MOTIVO","renda-per-capta","classe-da-renda","nota-da-renda","ano-ingresso","TEMPO UFPR - SEM"]
      # 10. Ordenação e Merge
-    colunas_id = ["GRR","CPF", "NOME","SETOR","curso","proafe","planilha_andre","MOTIVO","renda-per-capta","classe-da-renda","nota-da-renda","ano-ingresso","TEMPO UFPR - SEM","IRA SEM","E-MAIL PESSOAL","E-MAIL INSTITUCIONAL","TELEFONE"]
+    #colunas_id = ["GRR","CPF", "NOME","SETOR","curso","proafe","planilha_andre","MOTIVO","renda-per-capta","classe-da-renda","nota-da-renda","ano-ingresso","TEMPO UFPR - SEM","IRA SEM","E-MAIL PESSOAL","E-MAIL INSTITUCIONAL","TELEFONE"]
     
     # Ensure columns exist
     for col in colunas_id:
