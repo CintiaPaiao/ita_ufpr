@@ -176,17 +176,17 @@ def calcular_ita_final(df: pd.DataFrame) -> pd.DataFrame:
 def calculate_ita(file_path, file_path_crite, file_paht_form):
     pd.set_option('future.no_silent_downcasting', True)
     
-    # Load Data
+    # Load Data 
     try:
         df = pd.read_excel(file_path, sheet_name="PLANILHA COMPLETA")
         df_social = pd.read_excel(file_path_crite, sheet_name="Serviço Social")
         df_psicologia = pd.read_excel(file_path_crite, sheet_name="Psicologia")
         df_pedagogia = pd.read_excel(file_path_crite, sheet_name="Pedagogia")
-        df_form_ = pd.read_excel(file_paht_form, sheet_name="Sheet1")
+        #df_form_ = pd.read_excel(file_paht_form, sheet_name="Sheet1")
     except Exception as e:
         raise ValueError(f"Erro ao ler planilhas: {e}")
-    df_form_ = df_form_.drop_duplicates(subset="GRR", keep="last")
-    df_form = padronizar_grr(df_form_)
+    #df_form_ = df_form_.drop_duplicates(subset="GRR", keep="last")
+    #df_form = padronizar_grr(df_form_)
 
     # 2. Risco Aprovação
     df["porcentagem_aprov_num"] = (pd.to_numeric(
@@ -357,6 +357,6 @@ def calculate_ita(file_path, file_path_crite, file_paht_form):
     df_acomp = aplicar_indicador_acomp_adesao(df_renda)
     df_ITA = calcular_ita_final(df_acomp)
     
-    df_merged_final = df_ITA.merge(df_form, on="GRR", how="left")
+    #df_merged_final = df_ITA.merge(df_form, on="GRR", how="left")
     
-    return df_merged_final,df_ITA
+    return df_ITA
