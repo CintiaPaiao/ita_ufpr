@@ -18,10 +18,10 @@ default_main = "https://docs.google.com/spreadsheets/d/1cpXhYwbhTlIexWjTprVITGAJ
 default_criteria = "https://docs.google.com/spreadsheets/d/12Qjx_6-2Bed0cSXH57H3d2xrL-UP-JArwsEu5ys5WiQ/export?format=xlsx"
 default_form = "/export?format=xlsx"
 
-url_main = st.text_input("URL da Planilha Completa", value=default_main)
-url_criteria = st.text_input("URL da Planilha de Critérios (Social/Psicologia/Pedagogia)", value=default_criteria)
-url_form = st.text_input("URL da Planilha de Formulário", value=default_form)
- 
+url_main = st.text_input("URL da Planilha rendimento (Coag)", value=default_main)
+url_criteria = st.text_input("URL da Planilha de atendimento (Social/Psicologia/Pedagogia)", value=default_criteria)
+url_form = st.text_input("URL da Planilha de Formulário dos estudantes", value=default_form)
+
 if st.button("Calcular ITA"):
     if not url_main or not url_criteria or not url_form:
         st.error("Por favor, preencha todos os campos de URL.")
