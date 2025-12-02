@@ -81,7 +81,7 @@ if st.button("Calcular ITA"):
                 
                 total_alunos = len(df_filtered)
                 media_ita = df_filtered["ITA"].mean() if "ITA" in df_filtered.columns else 0
-                alunos_alto_risco = len(df_filtered[df_filtered["classificacao_ita"] == "risco alto"]) if "classificacao_ita" in df_filtered.columns else 0
+                alunos_alto_risco = len(df_filtered[df_filtered["classificacao_ita"] == "61 a 100 - risco alto"]) if "classificacao_ita" in df_filtered.columns else 0
                 
                 col1.metric("Total de Alunos", total_alunos)
                 col2.metric("Média do ITA", f"{media_ita:.2f}")
