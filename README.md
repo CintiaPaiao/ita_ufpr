@@ -2,6 +2,8 @@
 
 Aplicação web para cálculo do ITA a partir de planilhas do Google Sheets.
 
+obs: para cintribuir para o projeto, crie uma nova branch para rastreabilidade
+
 ## Estrutura do Projeto
 
 - `app.py`: Interface do usuário (Streamlit).
