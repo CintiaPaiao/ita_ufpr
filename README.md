@@ -113,7 +113,7 @@ A aplicação exporta a Planilha Unificada com 19 abas. A página Produção e P
 
 Alguns pontos continuam dependentes de decisão/insumo institucional: inventário definitivo do art. 18, cálculo final de tempo computável do art. 21, fonte final da taxa de turma do art. 20, pactuação definitiva dos pesos/faixas do IAL, política institucional de retenção e eventual integração de identidade/SSO.
 
-## Alterações da versão 0.4.3 — inicialização automática no Streamlit
+## Alterações da versão 0.4.4 — inicialização automática no Streamlit
 
 A aplicação agora executa automaticamente, no startup:
 

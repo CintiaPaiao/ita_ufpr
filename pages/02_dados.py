@@ -11,8 +11,9 @@ from src.services.base_status_service import base_status,required_ready
 from src.services.processing_service import process_cycle
 from src.services.freeze_service import freeze_current_cycle
 from src.services.bootstrap_service import ensure_default_cycles
+from src.exports.input_templates import build_base_template, build_criteria_workbook_template, build_all_templates_zip
 
-user=page_setup("Bases, Importação e Processamento do Ciclo – v0.4.3", allowed_roles=('ADMIN', 'CHEFIA'))
+user=page_setup("Bases, Importação e Processamento do Ciclo – v0.4.4", allowed_roles=('ADMIN', 'CHEFIA'))
 with session_scope() as s:
     ensure_default_cycles(s)
     cycles=list(s.scalars(select(Cycle).order_by(Cycle.codigo)))
@@ -29,6 +30,20 @@ elif cycle_obj.frozen_at:
 t0,t1,t2,t3,t4=st.tabs(["0. Pacote da Calculadora ITA 2025","1. Importar base individual","2. Status das bases","3. Processar ciclo","4. Histórico"])
 with t0:
     st.subheader("Importação compatível com as bases reais da Calculadora ITA 2025")
+    st.markdown("**Modelos para download:** use estes arquivos quando precisar montar ou conferir o layout do pacote legado.")
+    d1,d2,d3=st.columns(3)
+    d1.download_button("⬇️ Modelo 1 — Planilha principal", data=build_base_template("LEGADO_PLANILHA_COMPLETA"),
+                       file_name="modelo_01_planilha_completa_ita.xlsx",
+                       mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                       use_container_width=True)
+    d2.download_button("⬇️ Modelo 2 — Acompanhamentos", data=build_criteria_workbook_template(),
+                       file_name="modelo_02_acompanhamentos_equipes.xlsx",
+                       mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                       use_container_width=True)
+    d3.download_button("⬇️ Modelo 3 — Formulário", data=build_base_template("FORMULARIO_CONTEXTUALIZACAO"),
+                       file_name="modelo_03_formulario_contextualizacao.xlsx",
+                       mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                       use_container_width=True)
     st.markdown("Carregue a mesma estrutura usada pela calculadora antiga: **Planilha rendimento/vulnerabilidade (PLANILHA COMPLETA)**, **planilha de atendimentos por equipe** e, opcionalmente, **formulário**. O sistema importa os dados, mas não reproduz o score ITA antigo.")
     main=st.file_uploader("1. Planilha rendimento/vulnerabilidade (obrigatória)",type=["xlsx","xls"],key="legacy_main")
     criteria=st.file_uploader("2. Planilha de atendimentos – Serviço Social/Psicologia/Pedagogia (opcional)",type=["xlsx","xls"],key="legacy_criteria")
@@ -54,6 +69,30 @@ with t0:
 with t1:
     options=dict(list_base_types()); base_type=st.selectbox("Tipo da base",list(options),format_func=lambda x:options[x])
     spec=get_base_spec(base_type); st.caption(f"Granularidade: {spec.get('grain','conforme dicionário')} • {'OBRIGATÓRIA' if spec.get('required') else 'opcional'}")
+    cmodel,call=st.columns([2,2])
+    cmodel.download_button(
+        "⬇️ Baixar modelo desta base",
+        data=build_base_template(base_type),
+        file_name=f"modelo_{base_type.lower()}.xlsx",
+        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        use_container_width=True,
+    )
+    call.download_button(
+        "📦 Baixar todos os modelos de input",
+        data=build_all_templates_zip(),
+        file_name="modelos_input_pae_ufpr_v0.4.4.zip",
+        mime="application/zip",
+        use_container_width=True,
+    )
+    with st.expander("O que vem no modelo?"):
+        st.markdown("""
+        Cada arquivo possui três abas:
+        - **MODELO** — cabeçalhos recomendados e uma linha sintética de exemplo;
+        - **DICIONARIO** — campo canônico, obrigatoriedade mínima, tipo, descrição, aliases aceitos e exemplo;
+        - **INSTRUCOES** — granularidade, tratamento de ausentes, ciclo e cuidados de LGPD.
+
+        Os nomes da aba **MODELO** são a forma recomendada de preparar novos arquivos. Os aliases continuam aceitos para compatibilidade com bases existentes.
+        """)
     uploaded=st.file_uploader("Selecione XLSX, XLS ou CSV",type=["xlsx","xls","csv"],key="operational_upload")
     if uploaded:
         raw=uploaded.getvalue(); sheets=list_excel_sheets(uploaded.name,raw); sheet=st.selectbox("Aba",sheets) if sheets else 0

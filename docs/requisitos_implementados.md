@@ -49,8 +49,8 @@
 | R46 | Configuração endurecida do Streamlit | Implementado | `.streamlit/config.toml` | XSRF/CORS/error details |
 | R47 | Workflow ampliado reavaliação/CRPS/recurso | Implementado | `case_service.py` | `test_case_workflow_v04.py` |
 
-| R33 | Bootstrap automático do schema/ciclos | Implementado 0.4.3 | src/services/bootstrap_service.py + app.py | test_bootstrap_v042.py | Sem dados sintéticos |
-| R34 | Gestão de ciclos pela interface | Implementado 0.4.3 | pages/23_administracao.py | test_cycle_management_v042.py | Criar/ativar/encerrar/reabrir |
-| R35 | Produção Streamlit sem scripts manuais | Implementado 0.4.3 | app.py | teste bootstrap | init/load_sample não obrigatórios |
-| R36 | Bloqueio de ciclo encerrado | Implementado 0.4.3 | pages/02_dados.py | revisão/teste serviço | Evita novas operações |
-| R37 | Persistência externa crítica em produção Streamlit | Implementado 0.4.3 | readiness_service.py | test_readiness_v042.py | PostgreSQL recomendado |
+| R33 | Bootstrap automático do schema/ciclos | Implementado 0.4.4 | src/services/bootstrap_service.py + app.py | test_bootstrap_v042.py | Sem dados sintéticos |
+| R34 | Gestão de ciclos pela interface | Implementado 0.4.4 | pages/23_administracao.py | test_cycle_management_v042.py | Criar/ativar/encerrar/reabrir |
+| R35 | Produção Streamlit sem scripts manuais | Implementado 0.4.4 | app.py | teste bootstrap | init/load_sample não obrigatórios |
+| R36 | Bloqueio de ciclo encerrado | Implementado 0.4.4 | pages/02_dados.py | revisão/teste serviço | Evita novas operações |
+| R37 | Persistência externa crítica em produção Streamlit | Implementado 0.4.4 | readiness_service.py | test_readiness_v042.py | PostgreSQL recomendado |
