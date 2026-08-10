@@ -13,7 +13,7 @@ random.seed(42);init_db()
 with session_scope() as s:
     cycles=list(s.scalars(select(Cycle).order_by(Cycle.codigo)))
     if not cycles:
-        c1=Cycle(codigo='2025/2',status='DADOS_VALIDADOS',code_version='0.1.0',mcn_version='MCN_1.0',ial_version='IAL_TESTE_1');c2=Cycle(codigo='2026/1',status='PREPARACAO_DADOS',code_version='0.1.0',mcn_version='MCN_1.0',ial_version='IAL_TESTE_1');s.add_all([c1,c2]);s.flush()
+        c1=Cycle(codigo='2025/2',status='DADOS_VALIDADOS',code_version='0.3.0',mcn_version='MCN_1.0',ial_version='IAL_TESTE_1');c2=Cycle(codigo='2026/1',status='PREPARACAO_DADOS',code_version='0.3.0',mcn_version='MCN_1.0',ial_version='IAL_TESTE_1');s.add_all([c1,c2]);s.flush()
     else:c1,c2=cycles[0],cycles[-1]
     sts=[]
     for i in range(1,31):

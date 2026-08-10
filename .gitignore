@@ -11,3 +11,6 @@ data/exports/*
 logs/*
 .venv/
 venv/
+.streamlit/secrets.toml
+*.backup.db
+backup_*.zip

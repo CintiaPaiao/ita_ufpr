@@ -1,0 +1,238 @@
+base_types:
+  SIGA_BENEFICIARIOS:
+    label: "SIGA / Beneficiários PAE"
+    required: true
+    target: "beneficiarios"
+    grain: "uma linha por estudante/benefício"
+    required_any:
+      - ["GRR", "grr"]
+      - ["NOME", "nome", "Nome"]
+      - ["CURSO", "curso"]
+    aliases:
+      GRR: ["GRR", "grr", "MATRICULA", "matricula"]
+      NOME: ["NOME", "nome", "Nome", "NOME COMPLETO"]
+      CURSO: ["CURSO", "curso", "Curso"]
+      CODIGO_CURSO: ["CODIGO_CURSO", "código curso", "codigo curso", "COD CURSO"]
+      CURRICULO: ["CURRICULO", "currículo", "curriculo"]
+      CAMPUS: ["CAMPUS", "campus", "SETOR", "setor", "LOCAL"]
+      INGRESSO: ["INGRESSO", "ingresso", "ano-ingresso", "ANO INGRESSO"]
+      AUXILIOS: ["AUXILIOS", "auxílios", "beneficios", "BENEFICIOS", "modalidade"]
+      STATUS_BENEFICIO: ["STATUS_BENEFICIO", "status beneficio", "situação benefício"]
+      RENDA_PER_CAPITA: ["RENDA_PER_CAPITA", "renda-per-capta", "renda per capita", "RENDA"]
+      DEFICIENCIA_ACESSIBILIDADE: ["DEFICIENCIA", "deficiência", "PCD", "DEFICIENCIA_ACESSIBILIDADE"]
+      PARENTALIDADE_CUIDADO: ["PARENTALIDADE", "estudante mãe", "ESTUDANTE_MAE", "PARENTALIDADE_CUIDADO"]
+      REFUGIO_MIGRACAO: ["REFUGIADO", "MIGRANTE", "REFUGIO_MIGRACAO"]
+      ACOLHIMENTO: ["ACOLHIMENTO", "egresso acolhimento", "CASA_ACOLHIMENTO"]
+      POVOS_COMUNIDADES: ["QUILOMBOLA", "INDIGENA", "POVOS_COMUNIDADES"]
+  HISTORICO_ACADEMICO:
+    label: "Histórico acadêmico por disciplina"
+    required: true
+    target: "historico_academico"
+    grain: "uma linha por estudante × disciplina × período"
+    required_any:
+      - ["GRR", "grr"]
+      - ["PERIODO", "período", "periodo"]
+      - ["DISCIPLINA_CODIGO", "codigo_disciplina", "código disciplina"]
+    aliases:
+      GRR: ["GRR", "grr"]
+      PERIODO: ["PERIODO", "período", "periodo", "SEMESTRE"]
+      DISCIPLINA_CODIGO: ["DISCIPLINA_CODIGO", "codigo_disciplina", "código disciplina", "COD_DISCIPLINA", "CODIGO"]
+      DISCIPLINA_NOME: ["DISCIPLINA_NOME", "disciplina", "DISCIPLINA", "nome_disciplina"]
+      TURMA: ["TURMA", "turma"]
+      CH: ["CH", "carga_horaria", "carga horária"]
+      OBRIGATORIA: ["OBRIGATORIA", "obrigatória", "obrigatoria"]
+      SITUACAO: ["SITUACAO", "situação", "situacao", "RESULTADO"]
+      APROVADO: ["APROVADO", "aprovado", "APROVACAO"]
+      REP_NOTA: ["REP_NOTA", "reprovacao_nota", "reprovação por nota"]
+      REP_FREQ: ["REP_FREQ", "reprovacao_frequencia", "reprovação por frequência"]
+      CANCELADO: ["CANCELADO", "cancelado", "CANCELAMENTO"]
+      NOTA: ["NOTA", "nota"]
+      FREQUENCIA_PCT: ["FREQUENCIA_PCT", "frequência", "frequencia", "%FREQUENCIA"]
+  PARAMETROS_CURRICULARES:
+    label: "Parâmetros curriculares / art. 18"
+    required: true
+    target: "parametros_curriculares"
+    required_any:
+      - ["CODIGO_CURSO", "Curso / oferta", "curso"]
+    aliases:
+      CODIGO_CURSO: ["CODIGO_CURSO", "codigo curso", "Curso / oferta", "curso"]
+      CURRICULO: ["CURRICULO", "curriculo", "Currículo"]
+      CAMPUS: ["CAMPUS", "Local", "local"]
+      ETAPA: ["ETAPA", "etapa", "periodo_recomendado"]
+      DURACAO_REGULAR_PERIODOS: ["DURACAO_REGULAR_PERIODOS", "duracao regular", "duração regular"]
+      CH_TOTAL: ["CH_TOTAL", "carga total", "CH total"]
+      CH_MINIMA_ART18: ["CH_MINIMA_ART18", "Mínimo oficial localizado", "mínimo", "minimo"]
+      GRAU_EVIDENCIA: ["GRAU_EVIDENCIA", "Situação da evidência", "grau evidencia"]
+      FONTE: ["FONTE", "fonte", "Evidência"]
+  DISCIPLINAS_OBRIGATORIAS:
+    label: "Disciplinas obrigatórias por currículo"
+    required: true
+    target: "disciplinas_obrigatorias"
+    required_any:
+      - ["CODIGO_CURSO", "curso"]
+      - ["DISCIPLINA_CODIGO", "codigo_disciplina"]
+    aliases:
+      CODIGO_CURSO: ["CODIGO_CURSO", "curso", "codigo curso"]
+      CURRICULO: ["CURRICULO", "curriculo"]
+      DISCIPLINA_CODIGO: ["DISCIPLINA_CODIGO", "codigo_disciplina", "código disciplina"]
+      DISCIPLINA_NOME: ["DISCIPLINA_NOME", "disciplina"]
+      ETAPA_RECOMENDADA: ["ETAPA_RECOMENDADA", "etapa", "periodo_recomendado"]
+  TAXAS_APROVACAO_TURMAS:
+    label: "Taxas gerais de aprovação das turmas / art. 20"
+    required: false
+    target: "taxas_aprovacao_turmas"
+    required_any:
+      - ["PERIODO", "periodo"]
+      - ["DISCIPLINA_CODIGO", "codigo_disciplina"]
+    aliases:
+      PERIODO: ["PERIODO", "periodo"]
+      DISCIPLINA_CODIGO: ["DISCIPLINA_CODIGO", "codigo_disciplina"]
+      TURMA: ["TURMA", "turma"]
+      MATRICULADOS: ["MATRICULADOS", "matriculados"]
+      APROVADOS: ["APROVADOS", "aprovados"]
+      TAXA_APROVACAO_PCT: ["TAXA_APROVACAO_PCT", "taxa aprovacao", "taxa_aprovacao"]
+      FONTE: ["FONTE", "fonte"]
+      VALIDADA: ["VALIDADA", "validada"]
+  INTEGRALIZACAO_TEMPO:
+    label: "Integralização e tempo acadêmico"
+    required: true
+    target: "integralizacao_tempo"
+    required_any:
+      - ["GRR", "grr"]
+    aliases:
+      GRR: ["GRR", "grr"]
+      CH_TOTAL: ["CH_TOTAL", "CH total", "carga total"]
+      CH_INTEGRALIZADA: ["CH_INTEGRALIZADA", "ch-integralizada", "CH integralizada"]
+      PERIODOS_VINCULO: ["PERIODOS_VINCULO", "TEMPO UFPR - SEM", "semestres vínculo"]
+      PERIODOS_COMPUTAVEIS: ["PERIODOS_COMPUTAVEIS", "periodos computaveis"]
+      PERIODOS_REGULARES: ["PERIODOS_REGULARES", "periodos regulares"]
+      MUDANCA_CURSO: ["MUDANCA_CURSO", "mudança curso"]
+      RETORNO: ["RETORNO", "retorno"]
+      TRANCAMENTOS: ["TRANCAMENTOS", "trancamentos"]
+      PROCESSO_ACADEMICO: ["PROCESSO_ACADEMICO", "processo"]
+      POA_PLANO_ESTUDOS: ["POA_PLANO_ESTUDOS", "POA", "plano estudos"]
+  ACOMPANHAMENTO_P4E:
+    label: "Acompanhamento institucional – P4E"
+    required: false
+    target: "acompanhamentos"
+    fixed_sector: "P4E"
+    required_any:
+      - ["GRR", "grr"]
+    aliases: &acomp_aliases
+      GRR: ["GRR", "grr"]
+      SETOR: ["SETOR", "setor", "equipe"]
+      ESTADO: ["ESTADO", "estado", "status", "ACOMPANHAMENTO"]
+      DATA_ULTIMO_REGISTRO: ["DATA_ULTIMO_REGISTRO", "data", "data atendimento"]
+      FONTE: ["FONTE", "fonte"]
+      OBJETIVO_SINTETICO: ["OBJETIVO_SINTETICO", "observação", "observacoes", "síntese"]
+      FATORES_PROTECAO: ["FATORES_PROTECAO", "fatores de proteção", "barreiras"]
+  ACOMPANHAMENTO_PROAFE:
+    label: "Acompanhamento institucional – PROAFE"
+    required: false
+    target: "acompanhamentos"
+    fixed_sector: "PROAFE"
+    required_any: [["GRR", "grr"]]
+    aliases: *acomp_aliases
+  ACOMPANHAMENTO_CATRIM:
+    label: "Acompanhamento institucional – CATRIM"
+    required: false
+    target: "acompanhamentos"
+    fixed_sector: "CATRIM"
+    required_any: [["GRR", "grr"]]
+    aliases: *acomp_aliases
+  HISTORICO_AVALIACAO:
+    label: "Histórico de Avaliações de Rendimento"
+    required: false
+    target: "historico_avaliacoes"
+    required_any: [["GRR", "grr"]]
+    aliases:
+      GRR: ["GRR", "grr"]
+      CICLO_CODIGO: ["CICLO_CODIGO", "ciclo", "período"]
+      PARTICIPOU: ["PARTICIPOU", "participou", "apareceu-na-avaliacao-semestre-anterior?"]
+      PROFISSIONAL: ["PROFISSIONAL", "responsável", "Servidor de  Referência"]
+      RESULTADO: ["RESULTADO", "resultado", "manutenção"]
+      FASE: ["FASE", "fase"]
+      MNA: ["MNA", "mna"]
+      PIAAP: ["PIAAP", "piaap"]
+      ACOES_PACTUADAS: ["ACOES_PACTUADAS", "ações pactuadas", "encaminhamentos"]
+      IAL_ANTERIOR: ["IAL_ANTERIOR", "IAL", "ITA"]
+      MCN_RESUMO: ["MCN_RESUMO", "MCN", "critérios"]
+  LEGADO_ITA_2025:
+    label: "Planilha legada ITA/PROBEM 2025 (histórico; não recalcula IAL)"
+    required: false
+    target: "legado"
+    required_any: [["GRR", "grr"]]
+    aliases:
+      GRR: ["GRR", "grr"]
+      CURSO: ["curso", "CURSO"]
+      SETOR: ["SETOR", "setor"]
+      ITA: ["ITA", "nota_final_in_rend"]
+      APROVACAO_PCT: ["porcentagem-aprovacao"]
+      REP_FREQ_ATUAL: ["qtd-rep-frequencia", "qtd-reprovacao-frequencia", "#REP FREQ SEM 1ª planilha"]
+      HIST_FREQ: ["porcentagem-historica-de-reprovacao-frequencia"]
+      TEMPO_SEM: ["TEMPO UFPR - SEM"]
+      CH_INTEGRALIZADA: ["ch-integralizada"]
+      RENDA: ["renda-per-capta"]
+
+
+  LEGADO_PLANILHA_COMPLETA:
+    label: "Planilha completa no modelo da Calculadora ITA 2025"
+    required: false
+    target: "snapshot_academico_legado"
+    grain: "uma linha por estudante no ciclo, conforme PLANILHA COMPLETA da calculadora ITA"
+    required_any:
+      - ["GRR", "grr"]
+      - ["porcentagem-aprovacao", "% APROV SEM"]
+      - ["qtd-matriculada", "# MAT SEM"]
+    aliases:
+      GRR: ["GRR", "grr", "MATRICULA", "matricula"]
+      NOME: ["NOME", "nome", "Nome"]
+      SETOR: ["SETOR", "setor"]
+      CURSO: ["curso", "CURSO", "Curso"]
+      PROAFE: ["proafe", "PROAFE"]
+      MOTIVO: ["MOTIVO", "motivo"]
+      RENDA_PER_CAPITA: ["renda-per-capta", "renda-per-capita", "RENDA PER CAPITA", "RENDA_PER_CAPITA"]
+      CLASSE_RENDA: ["classe-da-renda", "classe", "CLASSE"]
+      NOTA_RENDA: ["nota-da-renda", "nota", "NOTA SOCIAL"]
+      ANO_INGRESSO: ["ano-ingresso", "ANO INGRESSO", "ANO_INGRESSO"]
+      TEMPO_SEM: ["TEMPO UFPR - SEM", "tempo ufpr - sem"]
+      CH_INTEGRALIZADA_PCT: ["ch-integralizada", "CH INTEGRALIZADA", "ch-integralizada 1ª planilha"]
+      CH_IDEAL: ["CH IDEAL", "ch_media_esperada"]
+      QTD_MATRICULADA: ["qtd-matriculada", "# MAT SEM"]
+      QTD_REP_NOTA: ["qtd-reprovacao-por-nota", "qtd-rep-nota"]
+      QTD_REP_FREQ: ["qtd-rep-frequencia", "qtd-reprovacao-frequencia", "#REP FREQ SEM 1ª planilha"]
+      QTD_CANCELADA: ["qtd-matricula-cancelada", "qtd-cancelada"]
+      IRA_SEM: ["IRA SEM", "ira sem"]
+      APROVACAO_PCT: ["porcentagem-aprovacao", "% APROV SEM"]
+      CH_RECOMENDADA_SEM: ["CH REC SEM", "CH REC SEMESTRAL"]
+      CH_MAT_TOTAL: ["CH MAT TOTAL", "CH CURSO SEM 1ª planilha"]
+      BAIXA_MAT: ["BAIXA MAT", "BAIXA MAT 1ª planilha"]
+      HIST_RF_1: ["% Rep Freq 2024-2", "RF HIST 1"]
+      HIST_RF_2: ["% Rep Freq 2024-1", "RF HIST 2"]
+      HIST_RF_3: ["% Rep Freq 2023 -2", "RF HIST 3"]
+      HIST_RF_MEDIA: ["porcentagem-historica-de-reprovacao-frequencia", "HIST RF MEDIA"]
+      AVALIACAO_ANTERIOR: ["apareceu-na-avaliacao-semestre-anterior?", "AVALIACAO ANTERIOR"]
+      AVALIACAO_2024: ["AVALIAÇÃO 2024", "AVALIACAO 2024"]
+      RECEBEU_AUX_ANTERIOR: ["recebeu-probem-ano-anterior?", "Editais 2024 1ª planilha"]
+      LEGACY_ITA: ["ITA", "nota_final_in_rend"]
+      LEGACY_CLASSIFICACAO: ["classificacao_ita"]
+      RESPONSAVEL_ANTERIOR: ["responsavel 2024", "responsavel 2025/1", "responsavel"]
+
+  FORMULARIO_CONTEXTUALIZACAO:
+    label: "Formulário de contextualização / atualização do estudante"
+    required: false
+    target: "contextualizacoes"
+    grain: "uma linha por resposta"
+    required_any:
+      - ["GRR", "grr", "Matrícula", "matricula"]
+    aliases:
+      GRR: ["GRR", "grr", "Matrícula", "matricula", "MATRICULA"]
+      DATA_RESPOSTA: ["Carimbo de data/hora", "Timestamp", "DATA", "data resposta"]
+      DEFICIENCIA_ACESSIBILIDADE: ["Deficiência", "deficiencia", "PCD", "necessidade de acessibilidade"]
+      PARENTALIDADE_CUIDADO: ["Parentalidade", "estudante mãe", "estudante mae", "responsabilidades de cuidado"]
+      REFUGIO_MIGRACAO: ["Refugiado", "refugio", "migração", "migracao"]
+      POVOS_COMUNIDADES: ["Quilombola", "Indígena", "Indigena", "povos e comunidades"]
+      TRABALHO_SUBSISTENCIA: ["Trabalho", "emprego", "atividade remunerada"]
+      MORADIA: ["Moradia", "moradia"]
+      TRANSPORTE: ["Transporte", "deslocamento"]
+      SAUDE_REPERCUSSAO_ACADEMICA: ["Saúde", "Saude", "saúde mental", "saude mental"]

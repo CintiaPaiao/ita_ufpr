@@ -1,40 +1,47 @@
-# Relatório de Implementação
+# Relatório de Implementação – versão 0.4.0
 
-## Estado
+## Classificação da entrega
 
-MVP funcional com arquitetura Streamlit + SQLAlchemy + SQLite. Não reproduz o ITA 2025 como score global.
+Primeira versão **preparada para produção com deploy Streamlit**, mantendo execução local e Docker. A aplicação está tecnicamente estruturada para SQLite ou PostgreSQL e possui controles de produção que não existiam nas versões 0.1–0.3.
 
-## Implementado
+## Núcleo funcional
 
-Banco relacional, migrations, ingestão Excel/CSV, normalização/validação de GRR, MCN, IAL configurável, fatores de proteção sem score, acompanhamentos, priorização por camadas, validação humana, distribuição, dashboards, fila, ficha individual, contextualização, atendimento, MAIC, MNA, PIAAP, manutenção, monitoramento, reavaliação, CRPS com trava, recursos, Comissão, auditoria, exportação, autenticação MVP, testes, Docker e documentação.
+- importação real e compatibilidade com o modelo da Calculadora ITA 2025;
+- persistência relacional;
+- MCN arts. 17–21 com estados protetivos de dado insuficiente;
+- IAL configurável e cobertura;
+- fatores de proteção em quatro fontes sem score;
+- acompanhamentos;
+- priorização N em camadas;
+- validação humana e distribuição;
+- ficha pré-análise/fila/ficha individual;
+- contextualização, atendimento, MAIC, MNA, PIAAP, manutenção e monitoramento;
+- reavaliação longitudinal automática com análise profissional separada;
+- CRPS com gate procedimental;
+- recursos e Comissão;
+- exportações e logs.
 
-## Parcial / dependente de pactuação
+## Produção 0.4
 
-- UI avançada de sensibilidade do IAL.
-- Auditoria de equidade avançada.
-- Integração Google Drive API.
-- Importadores específicos para cada cabeçalho institucional real.
-- Inventário final do art.18, regras finais do art.21 e fonte institucional das taxas do art.20.
-- SSO institucional e política definitiva de retenção.
+Implementados: PBKDF2, Streamlit Secrets, usuários via secrets/banco, RBAC, sessão expirada, limite de tentativas, modo demo bloqueado em produção, PostgreSQL opcional, pool/healthcheck lógico, checklist de prontidão, backup, retenção de logs, CI, endurecimento Streamlit, painel de sensibilidade, auditoria de equidade e rascunhos de comunicação.
 
-## Breaking changes metodológicas
+## Homologação necessária antes de uso institucional
 
-Vulnerabilidade, acompanhamento e avaliação anterior não pontuam; dado ausente não vira zero; IAL não é CRPS; não há suspensão automática.
+A configuração `APP_ENV=production` não substitui homologação institucional. É necessário validar bases reais, parâmetros dos arts. 18/20/21, pesos/faixas do IAL, perfis de acesso, retenção, backup e infraestrutura de banco.
+
+## Itens deliberadamente não automatizados
+
+Parecer profissional, persistência fundamentada, CRPS, suspensão, decisão de recurso e decisão da Comissão.
+
+## Deploy
+
+O frontend continua integralmente em Streamlit. Para uma implantação com cinco profissionais gravando simultaneamente, o pacote aceita PostgreSQL externo mantendo o Streamlit como aplicação.
 
 ## Testes
 
-Consulte a saída de `pytest` entregue com o pacote e a suíte em `tests/`.
-
-## Implantação
-
-Ver README e `docs/implantacao.md`.
+A entrega inclui suíte de regressão das versões anteriores mais testes 0.4 para hashing, readiness, sensibilidade, workflow e exportação.
 
 
-## Resultado de testes nesta entrega
+## Validação desta entrega
 
-- `python -m compileall`: aprovado.
-- `pytest`: **18 testes aprovados**, 0 falhas; 2 avisos de depreciação do `datetime.utcnow()` no SQLAlchemy/Python 3.13.
-- Inicialização SQLite: aprovada.
-- Carga de 30 estudantes sintéticos: aprovada.
-- Exportação da Planilha Unificada: aprovada.
-- Dockerfile foi gerado; o build Docker não foi executado neste ambiente por indisponibilidade do daemon Docker.
+31 testes aprovados; Alembic aprovado; homologação da planilha anonimizada ITA 2025 com 460 estudantes, 2.300 MCN, 460 IAL e 300 priorizações. O smoke visual Streamlit deve ser executado no ambiente de deploy, pois Streamlit não estava instalado no runtime de construção desta entrega.

@@ -1,29 +1,90 @@
 # Avaliação de Rendimento e Acompanhamento das Trajetórias Estudantis – PAE/UFPR
 
-Aplicação Streamlit/Python para apoiar o processamento acadêmico e a jornada profissional da Avaliação de Rendimento do PAE/UFPR.
+**Versão 0.4.0 – primeira versão preparada para produção com deploy Streamlit.**
 
-## Princípio institucional
+Aplicação Python/Streamlit para apoiar toda a jornada da Avaliação de Rendimento PAE/UFPR, desde a importação das bases até acompanhamento, reavaliação e garantias processuais.
 
-A aplicação **não decide suspensão automaticamente**. Mantém separados MCN, IAL, fatores de proteção, acompanhamento, MAIC, MNA, PIAAP, CRPS e decisão administrativa.
+## Princípios
 
-## Arquitetura
+A aplicação mantém separados **MCN, IAL, fatores de proteção, acompanhamento, MAIC, MNA, PIAAP, CRPS e decisão administrativa**. Não existe suspensão automática, score de vulnerabilidade, score de acompanhamento ou conversão automática de IAL em CRPS.
 
-Fontes institucionais → ingestão/validação → SQLite (MVP) → serviços/domínio → Streamlit → exportações Excel.
+## Stack
 
-A persistência usa SQLAlchemy e está preparada para migração futura para PostgreSQL via `DATABASE_URL`.
+Python 3.11, Streamlit, Pandas, SQLAlchemy, SQLite/PostgreSQL, Alembic, Plotly, OpenPyXL/XlsxWriter, Pandera e pytest.
 
 ## Instalação local
 
 ```bash
 python -m venv .venv
-source .venv/bin/activate
+source .venv/bin/activate     # Linux/macOS
+# .venv\Scripts\activate      # Windows
 pip install -r requirements.txt
 python scripts/init_db.py
 python scripts/load_sample_data.py
 streamlit run app.py
 ```
 
-No modo demo: usuário `admin`, senha `admin`. Troque/desative antes de qualquer uso real.
+No ambiente de desenvolvimento, se `APP_DEMO_MODE=true`, o login demo permanece `admin/admin`. **Esse login é bloqueado quando `APP_ENV=production`.**
+
+## Produção no Streamlit
+
+1. copie `.streamlit/secrets.toml.example` apenas como referência;
+2. configure secrets diretamente no ambiente de deploy;
+3. defina `app.env="production"` e `app.demo_mode=false`;
+4. configure `database.url`;
+5. gere hashes PBKDF2 com `python scripts/hash_password.py "senha"`;
+6. cadastre usuários no secret ou no banco;
+7. após subir a aplicação, abra **Produção e Prontidão**.
+
+Consulte `docs/deploy_streamlit_producao.md`.
+
+## Banco
+
+Desenvolvimento/homologação: SQLite.
+
+Produção multiusuária: a mesma aplicação aceita PostgreSQL por `DATABASE_URL` ou `[database].url` nos Streamlit Secrets. A camada SQLAlchemy evita acoplamento das regras de MCN/IAL ao banco.
+
+## Importação real
+
+A página **Bases, Importação e Processamento do Ciclo** aceita as bases formais do Projeto Técnico e possui compatibilidade com a `PLANILHA COMPLETA` utilizada na Calculadora ITA 2025. Os dados legados alimentam o modelo atual apenas quando a evidência é tecnicamente suficiente; lacunas permanecem como pendência/conferência.
+
+## Processamento
+
+O pipeline produz: universo → MCN → IAL → fatores prévios → acompanhamentos → histórico → priorização N → validação humana → distribuição → ficha pré-análise.
+
+## Jornada profissional
+
+A aplicação contém contextualização, atendimento/escuta, MAIC, MNA, PIAAP, manutenção, monitoramento, reavaliação, CRPS, recursos e Comissão Paritária. A ficha individual mostra a próxima ação calculada pelo workflow.
+
+## Novidades 0.4
+
+- autenticação PBKDF2;
+- RBAC por página;
+- sessão com expiração;
+- secrets de produção;
+- PostgreSQL opcional;
+- checklist de prontidão;
+- backups;
+- retenção de logs;
+- sensibilidade do IAL;
+- auditoria de equidade;
+- rascunhos de comunicação sem envio automático;
+- CI GitHub;
+- configuração Streamlit endurecida;
+- workflow integrado de reavaliação/CRPS/recurso.
+
+## Testes
+
+```bash
+pytest -q
+```
+
+Também execute:
+
+```bash
+python -m compileall -q .
+python scripts/validate_environment.py
+```
 
 ## Docker
 
@@ -31,58 +92,23 @@ No modo demo: usuário `admin`, senha `admin`. Troque/desative antes de qualquer
 docker compose up --build
 ```
 
-## Migrations
-
-```bash
-alembic upgrade head
-```
-
 ## Dados sintéticos
 
-`scripts/load_sample_data.py` cria 30 estudantes fictícios. Nenhum dado real integra o repositório.
-
-## MCN
-
-`src/domain/mcn/rules.py` implementa os arts. 17–21 separadamente, sem score global. Dados insuficientes geram estados como `DADO_PENDENTE`, `PARAMETRO_NAO_CONFIRMADO`, `REQUER_CONFERENCIA` ou `NAO_CALCULAVEL`.
-
-## IAL
-
-A configuração inicial de teste usa 40% rendimento, 35% frequência e 25% progressão. Pesos e faixas estão em `configs/ial.yaml` e devem ser validados empiricamente antes da adoção institucional definitiva.
-
-## Priorização
-
-A seleção usa camadas explicáveis e parâmetro `N`; não corresponde aos maiores IAL. A lista final exige validação da equipe e alterações manuais justificadas.
-
-## Fatores de proteção
-
-Quatro fontes: SIGA; P4E/PROAFE/CATRIM; formulário; atendimento. Não recebem score e não aumentam IAL ou CRPS.
-
-## Jornada profissional
-
-A aplicação possui páginas para contextualização, atendimento, MAIC, MNA, PIAAP, manutenção, monitoramento, reavaliação, CRPS, recursos e Comissão.
-
-## Segurança/LGPD
-
-O modo demo é apenas para desenvolvimento. Produção exige autenticação institucional, revisão de perfis, política de retenção, backup seguro, secrets e infraestrutura persistente. Dados sensíveis devem ser minimizados nos painéis e no módulo da Comissão.
-
-## Testes
-
-```bash
-pytest
-```
+`scripts/load_sample_data.py` cria dados fictícios. Nenhum dado real integra o repositório.
 
 ## Exportação
 
-A página Administração exporta a Planilha Unificada com 19 abas (`00_CONTROLE` a `18_DICIONARIO_DADOS`).
+A aplicação exporta a Planilha Unificada com 19 abas. A página Produção e Prontidão também gera backup institucional.
 
-## PostgreSQL
+## Estrutura documental
 
-Configure `DATABASE_URL` para PostgreSQL e instale o driver correspondente. As regras de domínio não precisam mudar.
+- `docs/refatoracao_0_3.md` – integração com o modelo ITA 2025;
+- `docs/refatoracao_0_4.md` – segurança/homologação/produção;
+- `docs/deploy_streamlit_producao.md` – implantação;
+- `docs/seguranca_lgpd.md` – controles;
+- `docs/requisitos_implementados.md` – cobertura;
+- `IMPLEMENTATION_REPORT.md` – situação técnica da entrega.
 
-## Streamlit Community Cloud
+## Pendências externas, não bugs de implementação
 
-SQLite local pode ser efêmero em hospedagem cloud. Para uso real multiusuário, prefira banco externo persistente, idealmente PostgreSQL.
-
-## Documentação
-
-Consulte `docs/` e `IMPLEMENTATION_REPORT.md`.
+Alguns pontos continuam dependentes de decisão/insumo institucional: inventário definitivo do art. 18, cálculo final de tempo computável do art. 21, fonte final da taxa de turma do art. 20, pactuação definitiva dos pesos/faixas do IAL, política institucional de retenção e eventual integração de identidade/SSO.

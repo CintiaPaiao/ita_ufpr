@@ -4,7 +4,7 @@ from src.ui.common import page_setup,select_student
 from src.db.session import session_scope
 from src.models.models import Cycle,CRPS
 from src.domain.crps.checks import crps_readiness
-u=page_setup('CRPS')
+u=page_setup('CRPS', allowed_roles=('ADMIN', 'PROFISSIONAL', 'CHEFIA'))
 with session_scope() as s:
     stu=select_student(s);cycles=list(s.scalars(select(Cycle).order_by(Cycle.codigo)))
     if not stu or not cycles:st.stop()
