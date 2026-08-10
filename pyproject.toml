@@ -1,6 +1,6 @@
 [project]
 name = "pae-avaliacao-rendimento"
-version = "0.4.0"
+version = "0.4.4"
 description = "Aplicação institucional de apoio à Avaliação de Rendimento PAE/UFPR"
 requires-python = ">=3.11"
 

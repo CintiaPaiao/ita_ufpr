@@ -1,4 +1,4 @@
-# Relatório de Implementação – versão 0.4.3
+# Relatório de Implementação – versão 0.4.4
 
 ## Classificação da entrega
 
@@ -46,6 +46,10 @@ A entrega inclui suíte de regressão das versões anteriores mais testes 0.4 pa
 
 31 testes aprovados; Alembic aprovado; homologação da planilha anonimizada ITA 2025 com 460 estudantes, 2.300 MCN, 460 IAL e 300 priorizações. O smoke visual Streamlit deve ser executado no ambiente de deploy, pois Streamlit não estava instalado no runtime de construção desta entrega.
 
-## Atualização 0.4.3
+## Atualização 0.4.4
 
-A versão 0.4.3 elimina a dependência de inicialização manual para deploy Streamlit. O startup cria o schema e os ciclos padrão automaticamente, sem carregar estudantes fictícios. A administração de ciclos passou para a interface e o checklist de prontidão classifica SQLite local como inadequado para produção Streamlit com dados reais, mantendo PostgreSQL externo como backend recomendado.
+A versão 0.4.4 elimina a dependência de inicialização manual para deploy Streamlit. O startup cria o schema e os ciclos padrão automaticamente, sem carregar estudantes fictícios. A administração de ciclos passou para a interface e o checklist de prontidão classifica SQLite local como inadequado para produção Streamlit com dados reais, mantendo PostgreSQL externo como backend recomendado.
+
+
+## Refatoração 0.4.4
+A interface passa a gerar modelos XLSX para todos os tipos de base cadastrados, com MODELO, DICIONARIO e INSTRUCOES, além de um ZIP consolidado com todos os layouts. O Pacote ITA 2025 possui modelos próprios para planilha principal, workbook de acompanhamentos e formulário.
