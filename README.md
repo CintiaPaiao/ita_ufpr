@@ -112,3 +112,35 @@ A aplicação exporta a Planilha Unificada com 19 abas. A página Produção e P
 ## Pendências externas, não bugs de implementação
 
 Alguns pontos continuam dependentes de decisão/insumo institucional: inventário definitivo do art. 18, cálculo final de tempo computável do art. 21, fonte final da taxa de turma do art. 20, pactuação definitiva dos pesos/faixas do IAL, política institucional de retenção e eventual integração de identidade/SSO.
+
+## Alterações da versão 0.4.2 — inicialização automática no Streamlit
+
+A aplicação agora executa automaticamente, no startup:
+
+1. criação/verificação do schema do banco;
+2. teste de conexão;
+3. criação idempotente dos ciclos definidos em `configs/ciclos.yaml` (por padrão 2025/2 e 2026/1).
+
+Portanto, **não é necessário executar `scripts/init_db.py` nem `scripts/load_sample_data.py` para iniciar a versão de produção**. O script de dados sintéticos continua existindo apenas para testes/homologação.
+
+O perfil `ADMIN` possui, em **Administração e Configuração → Ciclos**, funções para:
+
+- criar novo ciclo;
+- ativar ciclo;
+- encerrar ciclo;
+- reabrir ciclo.
+
+### Persistência no Streamlit
+
+Para deploy real no Streamlit, configure um PostgreSQL externo persistente nos Secrets:
+
+```toml
+[app]
+env = "production"
+demo_mode = false
+
+[database]
+url = "postgresql+psycopg://USUARIO:SENHA@HOST:5432/BANCO?sslmode=require"
+```
+
+SQLite continua suportado para desenvolvimento e homologação temporária, mas a página **Produção e Prontidão** considera SQLite local inadequado para produção no Streamlit por não oferecer garantia de persistência após reinícios/redeploys em ambientes efêmeros.

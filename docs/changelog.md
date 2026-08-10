@@ -45,3 +45,11 @@
 - Reavaliação passa a recuperar automaticamente MCN/IAL anteriores, MAIC, MNA, PIAAP, ações, monitoramentos, acompanhamentos e atendimentos do ciclo anterior.
 - Ficha pré-análise ampliada com fontes dos fatores de proteção e registro legado identificado.
 - Homologação estrutural contra a planilha real anonimizada de 2025 fornecida para desenvolvimento.
+
+## 0.4.2
+- Bootstrap automático do banco e dos ciclos semestrais no startup.
+- Removida dependência de `scripts/init_db.py` e `load_sample_data.py` para iniciar em produção.
+- Gestão de ciclos na interface ADMIN: criar, ativar, encerrar e reabrir.
+- Bloqueio de operações em ciclos encerrados.
+- Checklist de prontidão endurecido para persistência em deploy Streamlit.
+- Documentação específica do fluxo de produção no Streamlit.
