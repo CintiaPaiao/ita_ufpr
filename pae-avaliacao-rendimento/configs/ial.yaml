@@ -1,0 +1,18 @@
+version: "IAL_TESTE_1"
+weights:
+  rendimento: 40
+  frequencia: 35
+  progressao: 25
+coverage:
+  complete: 100
+  partial_minimum: 60
+bands:
+  - {min: 0, max: 19.9, label: "Prioridade acadêmica reduzida"}
+  - {min: 20, max: 34.9, label: "Prioridade acadêmica de atenção"}
+  - {min: 35, max: 49.9, label: "Prioridade acadêmica relevante"}
+  - {min: 50, max: 64.9, label: "Prioridade acadêmica elevada"}
+  - {min: 65, max: 100, label: "Prioridade acadêmica intensiva"}
+parameters:
+  trend_reference_pp: 30
+  trend_modifier: 0.15
+  progress_gap_reference: 0.50

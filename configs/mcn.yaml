@@ -1,0 +1,12 @@
+version: "MCN_1.0"
+art19_limits:
+  up_to_2: 0
+  from_3_to_4: 1
+  five_or_more: 2
+art20:
+  minimum_student_approval_pct: 50
+  exclude_class_approval_below_pct: 50
+art18:
+  automatic_minimum_evidence_grade: "A"
+art21:
+  max_regular_factor: 1.5

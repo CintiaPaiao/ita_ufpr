@@ -1,0 +1,10 @@
+app:
+  name: "Avaliação de Rendimento e Acompanhamento das Trajetórias Estudantis – PAE/UFPR"
+  version: "0.1.0"
+  default_cycle: "2025/2"
+  timezone: "America/Sao_Paulo"
+database:
+  url: "${DATABASE_URL:-sqlite:///database/pae.db}"
+security:
+  demo_mode: true
+  session_timeout_minutes: 120
