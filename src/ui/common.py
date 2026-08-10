@@ -4,10 +4,25 @@ import pandas as pd
 from sqlalchemy import select
 from src.security.auth import require_login, require_role, logout_button
 from src.config.runtime import app_env, is_production
+from src.services.bootstrap_service import bootstrap_application
 
 
 def page_setup(title: str, allowed_roles: tuple[str, ...] | None = None):
     st.set_page_config(page_title=title, page_icon="🎓", layout="wide")
+    # Streamlit multipágina pode executar esta página sem executar app.py.
+    # Bootstrap aqui garante schema + ciclos em qualquer rota de entrada.
+    try:
+        bootstrap = bootstrap_application()
+        if not bootstrap.database_ok:
+            st.error("O banco de dados não respondeu ao teste de conexão.")
+            st.stop()
+    except Exception as exc:
+        st.error("Não foi possível inicializar a base de dados da aplicação.")
+        if not is_production():
+            st.exception(exc)
+        else:
+            st.info("Verifique DATABASE_URL / Streamlit Secrets e reinicie o aplicativo.")
+        st.stop()
     user = require_role(*allowed_roles) if allowed_roles else require_login()
     st.title(title)
     st.caption(f"Usuário: {user['display_name']} • Perfil: {user['role']} • Ambiente: {app_env()}")

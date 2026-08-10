@@ -1,4 +1,4 @@
-# Relatório de Implementação – versão 0.4.2
+# Relatório de Implementação – versão 0.4.3
 
 ## Classificação da entrega
 
@@ -46,6 +46,6 @@ A entrega inclui suíte de regressão das versões anteriores mais testes 0.4 pa
 
 31 testes aprovados; Alembic aprovado; homologação da planilha anonimizada ITA 2025 com 460 estudantes, 2.300 MCN, 460 IAL e 300 priorizações. O smoke visual Streamlit deve ser executado no ambiente de deploy, pois Streamlit não estava instalado no runtime de construção desta entrega.
 
-## Atualização 0.4.2
+## Atualização 0.4.3
 
-A versão 0.4.2 elimina a dependência de inicialização manual para deploy Streamlit. O startup cria o schema e os ciclos padrão automaticamente, sem carregar estudantes fictícios. A administração de ciclos passou para a interface e o checklist de prontidão classifica SQLite local como inadequado para produção Streamlit com dados reais, mantendo PostgreSQL externo como backend recomendado.
+A versão 0.4.3 elimina a dependência de inicialização manual para deploy Streamlit. O startup cria o schema e os ciclos padrão automaticamente, sem carregar estudantes fictícios. A administração de ciclos passou para a interface e o checklist de prontidão classifica SQLite local como inadequado para produção Streamlit com dados reais, mantendo PostgreSQL externo como backend recomendado.

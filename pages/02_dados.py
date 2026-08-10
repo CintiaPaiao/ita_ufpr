@@ -12,7 +12,7 @@ from src.services.processing_service import process_cycle
 from src.services.freeze_service import freeze_current_cycle
 from src.services.bootstrap_service import ensure_default_cycles
 
-user=page_setup("Bases, Importação e Processamento do Ciclo – v0.4.2", allowed_roles=('ADMIN', 'CHEFIA'))
+user=page_setup("Bases, Importação e Processamento do Ciclo – v0.4.3", allowed_roles=('ADMIN', 'CHEFIA'))
 with session_scope() as s:
     ensure_default_cycles(s)
     cycles=list(s.scalars(select(Cycle).order_by(Cycle.codigo)))
