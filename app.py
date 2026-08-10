@@ -1,10 +1,27 @@
 import streamlit as st
+
 from src.security.auth import require_login, logout_button
-from src.db.session import init_db, database_backend, database_ping
+from src.db.session import database_backend, database_ping
 from src.config.runtime import app_env, is_production
+from src.services.bootstrap_service import bootstrap_application
 
 st.set_page_config(page_title="PAE/UFPR – Avaliação de Rendimento", page_icon="🎓", layout="wide")
-init_db()
+
+# Bootstrap idempotente: cria schema e ciclos institucionais, sem dados fictícios.
+try:
+    bootstrap = bootstrap_application()
+except Exception as exc:
+    st.error("Não foi possível inicializar a base de dados da aplicação.")
+    if not is_production():
+        st.exception(exc)
+    else:
+        st.info("Verifique DATABASE_URL / Streamlit Secrets e reinicie o aplicativo.")
+    st.stop()
+
+if not bootstrap.database_ok:
+    st.error("O banco de dados não respondeu ao teste de conexão.")
+    st.stop()
+
 user = require_login()
 logout_button()
 
@@ -17,11 +34,24 @@ Aplicação institucional para apoiar a jornada semestral de Avaliação de Rend
 A aplicação não executa suspensão automática e não converte vulnerabilidade, acompanhamento ou avaliação anterior em score punitivo.
 """
 )
-col1,col2,col3=st.columns(3)
+col1, col2, col3 = st.columns(3)
 col1.metric("Ambiente", app_env())
 col2.metric("Banco", database_backend())
 col3.metric("Banco disponível", "SIM" if database_ping() else "NÃO")
-if is_production() and database_backend()=="sqlite":
-    st.warning("Produção com SQLite está habilitada, mas para persistência multiusuária em deploy Streamlit recomenda-se banco PostgreSQL externo persistente.")
-st.info("Use o menu lateral para seguir a jornada do ciclo. Em produção, revise primeiro a página 'Produção e Prontidão'.")
+
+if bootstrap.cycles_created:
+    st.success("Ciclos iniciais criados automaticamente: " + ", ".join(bootstrap.cycles_created))
+
+if is_production() and database_backend() == "sqlite":
+    st.error(
+        "Produção no Streamlit com SQLite local não garante persistência após reinícios/redeploys. "
+        "Para dados reais, configure PostgreSQL externo persistente em DATABASE_URL / Streamlit Secrets."
+    )
+else:
+    st.success("Backend de persistência compatível com o modo atual de execução.")
+
+st.info(
+    "Use o menu lateral para seguir a jornada do ciclo. O banco e os ciclos básicos são inicializados automaticamente; "
+    "não é necessário executar scripts de dados sintéticos em produção."
+)
 st.write(f"Usuário autenticado: **{user['display_name']}** ({user['role']})")
