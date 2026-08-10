@@ -16,6 +16,10 @@
 
 # Changelog
 
+## 0.4.1
+- Corrigido módulo ausente `src.services.cycle_service`, necessário ao congelamento do ciclo e à página de importação/processamento.
+- Adicionada verificação estática de imports de serviços.
+
 ## 0.1.0
 - Fundação Streamlit/SQLAlchemy/SQLite.
 - MCN, IAL, proteção, acompanhamentos e priorização.

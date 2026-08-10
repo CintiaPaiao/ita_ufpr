@@ -1,6 +1,6 @@
 # Avaliação de Rendimento e Acompanhamento das Trajetórias Estudantis – PAE/UFPR
 
-**Versão 0.4.0 – primeira versão preparada para produção com deploy Streamlit.**
+**Versão 0.4.1 – primeira versão preparada para produção com deploy Streamlit.**
 
 Aplicação Python/Streamlit para apoiar toda a jornada da Avaliação de Rendimento PAE/UFPR, desde a importação das bases até acompanhamento, reavaliação e garantias processuais.
 
