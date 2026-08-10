@@ -3,7 +3,7 @@ from sqlalchemy import select,func
 from src.ui.common import page_setup
 from src.db.session import session_scope
 from src.models.models import *
-page_setup('Visão Geral do Ciclo')
+page_setup('Visão Geral do Ciclo', allowed_roles=('ADMIN', 'PROFISSIONAL', 'CHEFIA', 'COMISSAO', 'AUDITOR'))
 with session_scope() as s:
     cycles=list(s.scalars(select(Cycle).order_by(Cycle.codigo)))
     if not cycles:st.warning('Sem ciclos. Execute scripts/load_sample_data.py');st.stop()

@@ -5,7 +5,7 @@ from src.ui.common import page_setup,select_student
 from src.db.session import session_scope
 from src.models.models import Cycle,Monitoring
 from src.domain.monitoring.alerts import deadline_status
-page_setup('Monitoramento')
+page_setup('Monitoramento', allowed_roles=('ADMIN', 'PROFISSIONAL', 'CHEFIA'))
 with session_scope() as s:
     stu=select_student(s);cycles=list(s.scalars(select(Cycle).order_by(Cycle.codigo)))
     if not stu or not cycles:st.stop()

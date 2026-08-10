@@ -28,3 +28,23 @@
 | R24 | Sensibilidade IAL | Parcial | config | UI avançada pendente |
 | R25 | Google Drive API | Bloqueado/configurável | ingestion | Depende credencial institucional |
 | R26 | Auditoria de equidade avançada | Parcial | page 22 | Depende base real/minimização |
+
+## Cobertura acrescentada na versão 0.4
+
+| ID | Requisito | Status | Arquivo/módulo | Verificação |
+|---|---|---|---|---|
+| R33 | Deploy Streamlit em modo produção | Implementado | `.streamlit/`, `app.py` | checklist de prontidão |
+| R34 | Senhas PBKDF2 | Implementado | `src/security/passwords.py` | `test_passwords_v04.py` |
+| R35 | Streamlit Secrets | Implementado | `src/config/runtime.py` | configuração/documentação |
+| R36 | RBAC por página | Implementado | `src/ui/common.py`, `pages/` | revisão de rotas |
+| R37 | Sessão expirada/limite de tentativas | Implementado | `src/security/auth.py` | revisão funcional |
+| R38 | PostgreSQL opcional | Implementado | `src/db/session.py`, requirements | configuração `DATABASE_URL` |
+| R39 | Checklist de produção | Implementado | `readiness_service.py`, página 24 | `test_readiness_v04.py` |
+| R40 | Backup institucional | Implementado | `backup_service.py`, página 24 | `test_backup_v04.py` |
+| R41 | Retenção de logs | Implementado assistido | `retention_service.py` | exige confirmação humana |
+| R42 | Sensibilidade IAL | Implementado | `sensitivity_service.py`, página 04a | `test_sensitivity_v04.py` |
+| R43 | Auditoria de equidade agregada | Implementado | `equity_service.py`, página 22a | revisão funcional |
+| R44 | Comunicações em rascunho | Implementado | `communication_service.py`, página 20a | sem envio automático |
+| R45 | GitHub CI | Implementado | `.github/workflows/ci.yml` | compile + pytest + environment |
+| R46 | Configuração endurecida do Streamlit | Implementado | `.streamlit/config.toml` | XSRF/CORS/error details |
+| R47 | Workflow ampliado reavaliação/CRPS/recurso | Implementado | `case_service.py` | `test_case_workflow_v04.py` |

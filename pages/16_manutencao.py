@@ -3,7 +3,7 @@ from sqlalchemy import select
 from src.ui.common import page_setup,select_student
 from src.db.session import session_scope
 from src.models.models import Cycle,Maintenance
-u=page_setup('Registro de Manutenção')
+u=page_setup('Registro de Manutenção', allowed_roles=('ADMIN', 'PROFISSIONAL', 'CHEFIA'))
 with session_scope() as s:
     stu=select_student(s);cycles=list(s.scalars(select(Cycle).order_by(Cycle.codigo)))
     if not stu or not cycles:st.stop()

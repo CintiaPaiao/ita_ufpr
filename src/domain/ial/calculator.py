@@ -21,8 +21,12 @@ def progressao_component(ch_integralizada,ch_total,periodos_efetivos,periodos_re
     return clamp(.75*sev+.25*(1-min(1,ritmo_recente)))
 def classify_band(score):
     if score is None:return None
+    # As faixas metodológicas são expressas com uma casa decimal. Classificar pelo valor arredondado
+    # evita lacunas numéricas como 64.91 entre 64.9 e 65.0.
+    value=round(float(score),1)
     for b in IAL_CONFIG['bands']:
-        if b['min']<=score<=b['max']:return b['label']
+        if float(b['min'])<=value<=float(b['max']):return b['label']
+    return 'Fora da faixa configurada'
 @dataclass
 class IALCalculation:r:Optional[float];f:Optional[float];p:Optional[float];score:Optional[float];coverage:float;status:str;band:Optional[str]
 def calculate_ial(r,f,p):

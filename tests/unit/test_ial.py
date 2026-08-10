@@ -7,3 +7,6 @@ def test_full():
 def test_partial():assert calculate_ial(.5,.5,None).status.startswith('IAL PARCIAL')
 def test_nc():assert calculate_ial(.5,None,None).score is None
 def test_band():assert classify_band(70)=='Prioridade acadêmica intensiva'
+
+def test_band_rounding_no_gap():
+    assert classify_band(64.91)=="Prioridade acadêmica elevada"
