@@ -1,0 +1,3 @@
+cycles:
+  - {id: "2025/2", label: "2025/2", status: "PREPARACAO_DADOS"}
+  - {id: "2026/1", label: "2026/1", status: "PREPARACAO_DADOS"}

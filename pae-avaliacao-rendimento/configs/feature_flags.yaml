@@ -1,0 +1,7 @@
+features:
+  art18_automatico: false
+  art20_taxa_turma: true
+  crps: true
+  comissao: true
+  google_drive_api: false
+  local_auth: true

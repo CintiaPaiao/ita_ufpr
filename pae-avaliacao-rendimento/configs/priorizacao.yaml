@@ -1,0 +1,10 @@
+selection:
+  n_cases: 300
+  n_professionals: 5
+  cases_per_professional: 60
+layers:
+  A: {description: "MCN sinalizada + IAL elevado/intensivo"}
+  B: {description: "Reavaliação + recorrência acadêmica"}
+  C: {description: "IAL elevado/intensivo longitudinal"}
+  D: {description: "Prioridade protetiva/interventiva"}
+  E: {description: "Demais casos que demandam análise"}
