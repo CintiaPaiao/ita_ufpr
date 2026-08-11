@@ -1,8 +1,8 @@
-# PAE/UFPR — Avaliação de Rendimento v0.4.5
+# PAE/UFPR — Avaliação de Rendimento v0.4.5.1
 
 Aplicação Streamlit de apoio técnico-operacional à Avaliação de Rendimento e acompanhamento das trajetórias. **Não automatiza parecer, CRPS final, suspensão ou decisão administrativa.**
 
-## Novidades 0.4.5
+## Novidades 0.4.5.1
 - Jornada guiada do ciclo e indicação de situação/próxima ação.
 - Central de Configurações para N, equipe, IAL, parâmetros normativos/operacionais e feature flags.
 - Validação de entrada orientada à correção.

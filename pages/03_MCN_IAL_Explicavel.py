@@ -1,6 +1,6 @@
 import streamlit as st
 from src.core import art19,art20,ial,band,load_config
-from src.ui import setup,next_action
+from src.ui.helpers import setup,next_action
 setup('MCN e IAL explicáveis');cfg=load_config()
 st.subheader('Demonstração segura de cálculo')
 n=st.number_input('Disciplinas matriculadas',0,20,5);rf=st.number_input('Reprovações por frequência',0,20,1);ap=st.number_input('Componentes elegíveis aprovados',0,20,3);el=st.number_input('Componentes elegíveis',0,20,5)

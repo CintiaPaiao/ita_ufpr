@@ -1,6 +1,6 @@
 import streamlit as st, pandas as pd, datetime as dt
 from src.core import *
-from src.ui import setup,next_action
+from src.ui.helpers import setup,next_action
 setup('Jornada do ciclo'); init_db(); cfg=load_config()
 cycle=st.text_input('Ciclo','2025/2')
 steps=['Preparar','Modelos','Importar','Validar','Congelar','Processar','Revisar','Selecionar','Distribuir','Analisar','Monitorar','Reavaliar']

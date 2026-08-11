@@ -1,6 +1,6 @@
 import streamlit as st
 from src.core import load_config,save_config
-from src.ui import setup
+from src.ui.helpers import setup
 setup('Central de Configurações'); cfg=load_config()
 st.warning('Alterações metodológicas devem ser pactuadas e versionadas. Parâmetros pendentes podem permanecer desabilitados por feature flag.')
 with st.form('cfg'):

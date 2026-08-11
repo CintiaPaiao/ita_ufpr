@@ -1,6 +1,6 @@
 import streamlit as st
 from src.core import init_db,load_config,connect
-from src.ui import setup,next_action
+from src.ui.helpers import setup,next_action
 init_db(); cfg=load_config(); setup('Avaliação de Rendimento e Trajetórias Estudantis')
 con=connect();
 counts={t:con.execute(f'SELECT COUNT(*) c FROM {t}').fetchone()['c'] for t in ['students','imports','results','professional_records']}; con.close()

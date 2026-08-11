@@ -1,4 +1,4 @@
-# Cobertura funcional v0.4.5
+# Cobertura funcional v0.4.5.1
 
 | Requisito | Status | Evidência |
 |---|---|---|

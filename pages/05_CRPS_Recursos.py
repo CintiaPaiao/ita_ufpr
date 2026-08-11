@@ -1,6 +1,6 @@
 import streamlit as st
 from src.core import crps3_allowed,load_config
-from src.ui import setup,next_action
+from src.ui.helpers import setup,next_action
 setup('CRPS, garantias e recursos');cfg=load_config()
 if not cfg['features']['crps']: st.warning('CRPS desabilitada por feature flag.');st.stop()
 st.error('CRPS-3 não é suspensão. É condição para abertura de análise técnico-administrativa, após garantias.')
