@@ -1,16 +1,8 @@
 .env
 *.db
 __pycache__/
-*.py[cod]
 .pytest_cache/
 .streamlit/secrets.toml
 data/input/*
 data/processed/*
-data/exports/*
-!data/samples/*
 logs/*
-.venv/
-venv/
-.streamlit/secrets.toml
-*.backup.db
-backup_*.zip
