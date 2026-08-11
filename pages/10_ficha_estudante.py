@@ -33,7 +33,7 @@ with session_scope() as s:
             if model is None: st.info("A linha do tempo é composta pelos registros datados das etapas anteriores.")
             elif model is EvaluationHistory:
                 rows=list(s.scalars(select(model).where(model.student_id==student.id)))
-                st.dataframe(pd.DataFrame([{c.name:getattr(r,c.name) for c in model.__table__.columns} for r in rows]),use_container_width=True,hide_index=True)
+                st.dataframe(pd.DataFrame([{c.name:getattr(r,c.name) for c in model.__table__.columns} for r in rows]),width="stretch",hide_index=True)
             else:
                 rows=list(s.scalars(select(model).where(model.student_id==student.id,model.cycle_id==cycle.id)))
-                st.dataframe(pd.DataFrame([{c.name:getattr(r,c.name) for c in model.__table__.columns} for r in rows]),use_container_width=True,hide_index=True)
+                st.dataframe(pd.DataFrame([{c.name:getattr(r,c.name) for c in model.__table__.columns} for r in rows]),width="stretch",hide_index=True)

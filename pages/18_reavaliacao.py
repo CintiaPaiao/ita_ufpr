@@ -34,10 +34,10 @@ with session_scope() as s:
         {"dimensão":"Acompanhamentos","registro":len(ph.get('accompaniments',[]))},
         {"dimensão":"Atendimentos","registro":len(ph.get('attendances',[]))},
     ]
-    st.dataframe(pd.DataFrame(rows),use_container_width=True,hide_index=True)
+    st.dataframe(pd.DataFrame(rows),width="stretch",hide_index=True)
     if ph.get('monitoring'):
         st.write("**Monitoramento anterior:**")
-        st.dataframe(pd.DataFrame([{"parte":x.tipo_parte,"ação":x.acao,"status":x.status,"pendência institucional":x.pendencia_institucional} for x in ph['monitoring']]),use_container_width=True,hide_index=True)
+        st.dataframe(pd.DataFrame([{"parte":x.tipo_parte,"ação":x.acao,"status":x.status,"pendência institucional":x.pendencia_institucional} for x in ph['monitoring']]),width="stretch",hide_index=True)
 
     st.subheader("Garantia de nova escuta")
     escuta=st.checkbox("Nova escuta de reavaliação realizada")

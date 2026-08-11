@@ -18,6 +18,6 @@ for title,key in [("Por campus","campus"),("Por curso","curso")]:
     rows=[]
     for name,v in data[key].items():
         rows.append({"grupo":name,**v,"taxa_selecao_pct":round(100*v["selecionados"]/max(1,v["universo"]),1)})
-    st.dataframe(pd.DataFrame(rows).sort_values("taxa_selecao_pct",ascending=False),hide_index=True,use_container_width=True)
+    st.dataframe(pd.DataFrame(rows).sort_values("taxa_selecao_pct",ascending=False),hide_index=True,width="stretch")
 st.subheader("Fatores de proteção – distribuição agregada")
-st.dataframe(pd.DataFrame(data["fatores"]),hide_index=True,use_container_width=True)
+st.dataframe(pd.DataFrame(data["fatores"]),hide_index=True,width="stretch")

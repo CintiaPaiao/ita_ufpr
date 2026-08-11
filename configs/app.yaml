@@ -1,6 +1,6 @@
 app:
   name: Avaliação de Rendimento e Acompanhamento das Trajetórias Estudantis – PAE/UFPR
-  version: 0.4.3
+  version: 0.4.5.2
   default_cycle: 2025/2
   timezone: America/Sao_Paulo
 database:

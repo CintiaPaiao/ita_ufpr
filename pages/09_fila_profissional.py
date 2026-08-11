@@ -14,4 +14,4 @@ with session_scope() as s:
         stu=s.get(Student,a.student_id); cy=s.get(Cycle,a.cycle_id); pr=s.scalar(select(Prioritization).where(Prioritization.student_id==a.student_id,Prioritization.cycle_id==a.cycle_id))
         summary=build_case_summary(s,a.student_id,a.cycle_id)
         data.append({"Ciclo":cy.codigo if cy else "","GRR":stu.grr if stu else "","Nome":stu.nome if stu else "","Camada":pr.camada if pr else "","IAL":round(summary['ial'].score,2) if summary['ial'] and summary['ial'].score is not None else None,"Fase":"REAVALIACAO" if summary['is_reassessment'] else "PRIMEIRA_ANALISE","Próxima ação":summary['next_action']})
-st.dataframe(pd.DataFrame(data),use_container_width=True,hide_index=True)
+st.dataframe(pd.DataFrame(data),width="stretch",hide_index=True)

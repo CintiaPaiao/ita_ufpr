@@ -13,7 +13,7 @@ from src.services.freeze_service import freeze_current_cycle
 from src.services.bootstrap_service import ensure_default_cycles
 from src.exports.input_templates import build_base_template, build_criteria_workbook_template, build_all_templates_zip
 
-user=page_setup("Bases, Importação e Processamento do Ciclo – v0.4.4", allowed_roles=('ADMIN', 'CHEFIA'))
+user=page_setup("Bases, Importação e Processamento do Ciclo – v0.4.5.2", allowed_roles=('ADMIN', 'CHEFIA'))
 with session_scope() as s:
     ensure_default_cycles(s)
     cycles=list(s.scalars(select(Cycle).order_by(Cycle.codigo)))
@@ -35,15 +35,15 @@ with t0:
     d1.download_button("⬇️ Modelo 1 — Planilha principal", data=build_base_template("LEGADO_PLANILHA_COMPLETA"),
                        file_name="modelo_01_planilha_completa_ita.xlsx",
                        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                       use_container_width=True)
+                       width="stretch")
     d2.download_button("⬇️ Modelo 2 — Acompanhamentos", data=build_criteria_workbook_template(),
                        file_name="modelo_02_acompanhamentos_equipes.xlsx",
                        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                       use_container_width=True)
+                       width="stretch")
     d3.download_button("⬇️ Modelo 3 — Formulário", data=build_base_template("FORMULARIO_CONTEXTUALIZACAO"),
                        file_name="modelo_03_formulario_contextualizacao.xlsx",
                        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                       use_container_width=True)
+                       width="stretch")
     st.markdown("Carregue a mesma estrutura usada pela calculadora antiga: **Planilha rendimento/vulnerabilidade (PLANILHA COMPLETA)**, **planilha de atendimentos por equipe** e, opcionalmente, **formulário**. O sistema importa os dados, mas não reproduz o score ITA antigo.")
     main=st.file_uploader("1. Planilha rendimento/vulnerabilidade (obrigatória)",type=["xlsx","xls"],key="legacy_main")
     criteria=st.file_uploader("2. Planilha de atendimentos – Serviço Social/Psicologia/Pedagogia (opcional)",type=["xlsx","xls"],key="legacy_criteria")
@@ -56,8 +56,8 @@ with t0:
             c1,c2,c3=st.columns(3); c1.metric("Linhas",val.row_count); c2.metric("GRRs",val.unique_grr or 0); c3.metric("Campos reconhecidos",len(val.mapping))
             for w in val.warnings: st.warning(w)
             for e in val.errors: st.error(e)
-            st.dataframe(pd.DataFrame([{"campo":k,"coluna encontrada":v} for k,v in val.mapping.items()]),use_container_width=True,hide_index=True)
-            st.dataframe(can.head(30),use_container_width=True,hide_index=True)
+            st.dataframe(pd.DataFrame([{"campo":k,"coluna encontrada":v} for k,v in val.mapping.items()]),width="stretch",hide_index=True)
+            st.dataframe(can.head(30),width="stretch",hide_index=True)
             replace=st.checkbox("Substituir dados importados anteriormente para este ciclo",True,key="legacy_replace")
             if st.button("IMPORTAR PACOTE ITA 2025 → MODELO PAE",type="primary",disabled=not val.valid or cycle_obj.frozen_at is not None or cycle_obj.status == "ENCERRADO"):
                 with session_scope() as s:
@@ -75,14 +75,14 @@ with t1:
         data=build_base_template(base_type),
         file_name=f"modelo_{base_type.lower()}.xlsx",
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        use_container_width=True,
+        width="stretch",
     )
     call.download_button(
         "📦 Baixar todos os modelos de input",
         data=build_all_templates_zip(),
-        file_name="modelos_input_pae_ufpr_v0.4.4.zip",
+        file_name="modelos_input_pae_ufpr_v0.4.5.2.zip",
         mime="application/zip",
-        use_container_width=True,
+        width="stretch",
     )
     with st.expander("O que vem no modelo?"):
         st.markdown("""
@@ -101,8 +101,8 @@ with t1:
             c1,c2,c3=st.columns(3);c1.metric("Linhas",val.row_count);c2.metric("GRRs únicos",val.unique_grr or 0);c3.metric("Campos reconhecidos",len(val.mapping))
             for e in val.errors:st.error(e)
             for x in val.warnings:st.warning(x)
-            st.dataframe(pd.DataFrame([{"campo padrão":k,"coluna encontrada":v} for k,v in val.mapping.items()]),use_container_width=True,hide_index=True)
-            st.dataframe(canonical.head(100),use_container_width=True,hide_index=True)
+            st.dataframe(pd.DataFrame([{"campo padrão":k,"coluna encontrada":v} for k,v in val.mapping.items()]),width="stretch",hide_index=True)
+            st.dataframe(canonical.head(100),width="stretch",hide_index=True)
             replace=st.checkbox("Substituir a versão anterior desta base",value=True)
             if st.button("VALIDAR E REGISTRAR BASE",type="primary",disabled=(not val.valid or cycle_obj.frozen_at is not None or cycle_obj.status == "ENCERRADO")):
                 with session_scope() as s: validation,result,reg=execute_import(s,filename=uploaded.name,raw=raw,base_type=base_type,cycle_code=cycle_code,username=user["username"],sheet_name=sheet,replace=replace)
@@ -110,7 +110,7 @@ with t1:
         except Exception as e:safe_exception(e)
 with t2:
     with session_scope() as s: status=base_status(s,cycle_code);ready,missing=required_ready(s,cycle_code)
-    st.dataframe(pd.DataFrame(status),use_container_width=True,hide_index=True)
+    st.dataframe(pd.DataFrame(status),width="stretch",hide_index=True)
     st.info("Na v0.3, a PLANILHA COMPLETA da calculadora antiga pode substituir temporariamente SIGA + histórico detalhado + integralização para o processamento compatível. Arts. 17/20/21 permanecem protegidos quando faltam evidências detalhadas.")
     if ready:st.success("Todas as bases obrigatórias formais estão registradas.")
     else:st.warning("Bases formais pendentes: "+", ".join(missing))
@@ -135,4 +135,4 @@ with t3:
 with t4:
     with session_scope() as s: rows=list(s.scalars(select(ImportedFile).where(ImportedFile.cycle_code==cycle_code).order_by(ImportedFile.imported_at.desc())))
     data=[{c.name:getattr(x,c.name) for c in x.__table__.columns} for x in rows]
-    st.dataframe(pd.DataFrame(data),use_container_width=True,hide_index=True)
+    st.dataframe(pd.DataFrame(data),width="stretch",hide_index=True)
