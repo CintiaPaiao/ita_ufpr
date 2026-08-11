@@ -1,57 +1,14 @@
 import streamlit as st
-
-from src.security.auth import require_login, logout_button
-from src.db.session import database_backend, database_ping
-from src.config.runtime import app_env, is_production
-from src.services.bootstrap_service import bootstrap_application
-
-st.set_page_config(page_title="PAE/UFPR – Avaliação de Rendimento", page_icon="🎓", layout="wide")
-
-# Bootstrap idempotente: cria schema e ciclos institucionais, sem dados fictícios.
-try:
-    bootstrap = bootstrap_application()
-except Exception as exc:
-    st.error("Não foi possível inicializar a base de dados da aplicação.")
-    if not is_production():
-        st.exception(exc)
-    else:
-        st.info("Verifique DATABASE_URL / Streamlit Secrets e reinicie o aplicativo.")
-    st.stop()
-
-if not bootstrap.database_ok:
-    st.error("O banco de dados não respondeu ao teste de conexão.")
-    st.stop()
-
-user = require_login()
-logout_button()
-
-st.title("Avaliação de Rendimento e Acompanhamento das Trajetórias Estudantis – PAE/UFPR")
-st.markdown(
-    """
-Aplicação institucional para apoiar a jornada semestral de Avaliação de Rendimento do PAE/UFPR.
-
-**MCN, IAL, fatores de proteção, acompanhamento, MAIC, MNA, PIAAP, CRPS e decisão administrativa são dimensões distintas.**
-A aplicação não executa suspensão automática e não converte vulnerabilidade, acompanhamento ou avaliação anterior em score punitivo.
-"""
-)
-col1, col2, col3 = st.columns(3)
-col1.metric("Ambiente", app_env())
-col2.metric("Banco", database_backend())
-col3.metric("Banco disponível", "SIM" if database_ping() else "NÃO")
-
-if bootstrap.cycles_created:
-    st.success("Ciclos iniciais criados automaticamente: " + ", ".join(bootstrap.cycles_created))
-
-if is_production() and database_backend() == "sqlite":
-    st.error(
-        "Produção no Streamlit com SQLite local não garante persistência após reinícios/redeploys. "
-        "Para dados reais, configure PostgreSQL externo persistente em DATABASE_URL / Streamlit Secrets."
-    )
-else:
-    st.success("Backend de persistência compatível com o modo atual de execução.")
-
-st.info(
-    "Use o menu lateral para seguir a jornada do ciclo. O banco e os ciclos básicos são inicializados automaticamente; "
-    "não é necessário executar scripts de dados sintéticos em produção."
-)
-st.write(f"Usuário autenticado: **{user['display_name']}** ({user['role']})")
+from src.core import init_db,load_config,connect
+from src.ui import setup,next_action
+init_db(); cfg=load_config(); setup('Avaliação de Rendimento e Trajetórias Estudantis')
+con=connect();
+counts={t:con.execute(f'SELECT COUNT(*) c FROM {t}').fetchone()['c'] for t in ['students','imports','results','professional_records']}; con.close()
+c1,c2,c3,c4=st.columns(4)
+c1.metric('Estudantes',counts['students']);c2.metric('Bases importadas',counts['imports']);c3.metric('Resultados',counts['results']);c4.metric('Registros profissionais',counts['professional_records'])
+next_action('Ambiente pronto','Abra “Jornada do ciclo” para preparar, validar e congelar o ciclo.')
+st.subheader('Jornada orientada')
+st.write('Preparar → Modelos → Importar → Validar → Congelar → Processar → Revisar → Selecionar → Distribuir → Analisar → Monitorar → Reavaliar')
+st.warning('MCN ≠ IAL ≠ fatores de proteção ≠ acompanhamento ≠ MAIC ≠ MNA ≠ PIAAP ≠ CRPS ≠ decisão administrativa.')
+st.subheader('Configuração ativa')
+st.json({'versão':cfg['app']['version'],'N seleção':cfg['app']['selection_n'],'pesos IAL':cfg['ial']['weights'],'feature flags':cfg['features']})

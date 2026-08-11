@@ -1,12 +1,5 @@
 services:
   pae:
     build: .
-    ports:
-      - "8501:8501"
-    environment:
-      - DATABASE_URL=sqlite:////app/database/pae.db
-      - APP_DEMO_MODE=true
-      - DEMO_USER=admin
-    volumes:
-      - ./database:/app/database
-      - ./data/exports:/app/data/exports
+    ports: ["8501:8501"]
+    volumes: ["./data:/app/data"]
