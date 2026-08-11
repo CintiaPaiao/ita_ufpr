@@ -1,6 +1,6 @@
 import streamlit as st, pandas as pd, datetime as dt
 from src.core import connect,init_db
-from src.ui import setup,next_action
+from src.ui.helpers import setup,next_action
 setup('Fila profissional e ficha do estudante');init_db(); con=connect();rows=con.execute('SELECT * FROM results ORDER BY selected DESC, ial DESC').fetchall();df=pd.DataFrame([dict(r) for r in rows]);con.close()
 if df.empty: st.info('Ainda não há resultados processados. Use os dados sintéticos ou importe/processa um ciclo.')
 else:

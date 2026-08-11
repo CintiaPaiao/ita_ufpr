@@ -10,7 +10,7 @@ DB=ROOT/'data'/'pae.db'
 CFG=ROOT/'configs'/'settings.yaml'
 
 DEFAULT={
- 'app':{'version':'0.4.5','methodology_version':'2026-08','selection_n':300,'professionals':5},
+ 'app':{'version':'0.4.5.1','methodology_version':'2026-08','selection_n':300,'professionals':5},
  'ial':{'weights':{'rendimento':0.40,'frequencia':0.35,'progressao':0.25},'coverage_partial_min':0.60,
         'bands':[{'min':0,'max':19.9,'label':'Reduzida'},{'min':20,'max':34.9,'label':'Atenção'},{'min':35,'max':49.9,'label':'Relevante'},{'min':50,'max':64.9,'label':'Elevada'},{'min':65,'max':100,'label':'Intensiva'}]},
  'mcn':{'art20_min_approval':50,'art21_multiplier':1.5,'art19_limits':{'2':0,'4':1,'999':2}},

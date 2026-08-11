@@ -1,4 +1,4 @@
-# Manual rápido v0.4.5
+# Manual rápido v0.4.5.1
 1. Abra **Jornada do ciclo**.
 2. Informe o ciclo e carregue uma base no modelo esperado.
 3. Corrija inconsistências apontadas por linha/coluna.

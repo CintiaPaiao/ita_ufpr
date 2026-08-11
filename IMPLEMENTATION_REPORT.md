@@ -1,7 +1,7 @@
-# Implementation Report — v0.4.5
+# Implementation Report — v0.4.5.1
 
 ## Síntese
-A v0.4.5 concentra a evolução em usabilidade, configuração centralizada, explicabilidade, rastreabilidade e travas de segurança metodológica.
+A v0.4.5.1 concentra a evolução em usabilidade, configuração centralizada, explicabilidade, rastreabilidade e travas de segurança metodológica.
 
 ## Implementado
 Jornada do ciclo; importação manual; validação acionável; hash/congelamento; SQLite; central de configurações; IAL configurável; MCN demonstrável; fila/ficha; registros profissionais; timeline básica; CRPS com checklist; recursos como fluxo; painel QA; dados sintéticos; testes; Docker.
