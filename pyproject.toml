@@ -1,3 +1,9 @@
+[project]
+name = "pae-avaliacao-rendimento"
+version = "0.4.5.2"
+description = "Aplicação institucional de apoio à Avaliação de Rendimento PAE/UFPR"
+requires-python = ">=3.11"
+
 [tool.pytest.ini_options]
-pythonpath=["."]
-testpaths=["tests"]
+pythonpath = ["."]
+testpaths = ["tests"]

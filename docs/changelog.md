@@ -53,3 +53,11 @@
 - Bloqueio de operações em ciclos encerrados.
 - Checklist de prontidão endurecido para persistência em deploy Streamlit.
 - Documentação específica do fluxo de produção no Streamlit.
+
+## 0.4.5.2
+- Correção de regressão da v0.4.5.1 e reconstrução sobre a base completa da v0.4.4.
+- Restauradas dependências SQLAlchemy/Alembic/Pandera/Plotly/PostgreSQL.
+- Preservada integralmente a jornada de importação/processamento da v0.4.4.
+- Adicionadas Jornada do Ciclo e Central de Configurações sem remover páginas anteriores.
+- Atualizada API Streamlit: `use_container_width` substituído por `width`.
+- Adicionados testes de integridade do release e verificação de dependências.

@@ -21,7 +21,7 @@ result=analyze(records)
 cols=st.columns(len(result))
 for col,(name,data) in zip(cols,result.items()):
     col.subheader(name)
-    col.dataframe(pd.DataFrame([{"faixa":k,"n":v} for k,v in data["bands"].items()]),hide_index=True,use_container_width=True)
+    col.dataframe(pd.DataFrame([{"faixa":k,"n":v} for k,v in data["bands"].items()]),hide_index=True,width="stretch")
 base={x["student_id"]:x for x in result["40/35/25"]["records"]}
 compare=[]
 for scenario,data in result.items():
@@ -29,4 +29,4 @@ for scenario,data in result.items():
     moved=sum(1 for x in data["records"] if x["faixa"]!=base.get(x["student_id"],{}).get("faixa"))
     compare.append({"cenário":scenario,"mudanças_de_faixa":moved,"total":len(data["records"]),"percentual":round(100*moved/max(1,len(data["records"])),1)})
 st.subheader("Migração em relação ao cenário 40/35/25")
-st.dataframe(pd.DataFrame(compare),hide_index=True,use_container_width=True)
+st.dataframe(pd.DataFrame(compare),hide_index=True,width="stretch")

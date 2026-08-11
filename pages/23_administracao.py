@@ -48,7 +48,7 @@ with t2:
             }
             for c in cycles
         ]
-    st.dataframe(pd.DataFrame(data), hide_index=True, use_container_width=True)
+    st.dataframe(pd.DataFrame(data), hide_index=True, width="stretch")
 
     if current["role"] == "ADMIN":
         st.markdown("#### Criar novo ciclo")
@@ -71,7 +71,7 @@ with t2:
             selected_label = st.selectbox("Ciclo", list(options), key="admin_cycle_select")
             selected_id = options[selected_label]
             c1, c2, c3 = st.columns(3)
-            if c1.button("Ativar ciclo", use_container_width=True):
+            if c1.button("Ativar ciclo", width="stretch"):
                 try:
                     with session_scope() as s:
                         activate_cycle(s, selected_id)
@@ -79,7 +79,7 @@ with t2:
                     st.rerun()
                 except Exception as exc:
                     safe_exception(exc)
-            if c2.button("Encerrar ciclo", use_container_width=True):
+            if c2.button("Encerrar ciclo", width="stretch"):
                 try:
                     with session_scope() as s:
                         close_cycle(s, selected_id)
@@ -87,7 +87,7 @@ with t2:
                     st.rerun()
                 except Exception as exc:
                     safe_exception(exc)
-            if c3.button("Reabrir ciclo", use_container_width=True):
+            if c3.button("Reabrir ciclo", width="stretch"):
                 try:
                     with session_scope() as s:
                         reopen_cycle(s, selected_id)
@@ -103,7 +103,7 @@ with t3:
     with session_scope() as s:
         users = list(s.scalars(select(User).order_by(User.username)))
         data = [{"username": u.username, "nome": u.display_name, "perfil": u.role, "ativo": u.active} for u in users]
-    st.dataframe(pd.DataFrame(data), hide_index=True, use_container_width=True)
+    st.dataframe(pd.DataFrame(data), hide_index=True, width="stretch")
     if current["role"] == "ADMIN":
         st.subheader("Criar/atualizar usuário")
         with st.form("user_admin"):

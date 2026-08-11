@@ -13,7 +13,7 @@ st.info(f"Bootstrap automático: banco={bootstrap.database_backend}; ciclos cria
 with session_scope() as s:
     checks=production_readiness(s); score,ready=readiness_score(checks)
     col1,col2=st.columns(2); col1.metric("Prontidão",f"{score}%"); col2.metric("Críticos atendidos","SIM" if ready else "NÃO")
-    df=pd.DataFrame(checks); st.dataframe(df,hide_index=True,use_container_width=True)
+    df=pd.DataFrame(checks); st.dataframe(df,hide_index=True,width="stretch")
     if ready: st.success("Nenhuma falha crítica de configuração foi detectada pelo checklist automático. O sistema está tecnicamente pronto para homologação/produção conforme a infraestrutura configurada.")
     else: st.error("Há falhas críticas. Não utilizar dados reais em produção até corrigi-las. Em Streamlit Community Cloud, SQLite local é considerado falha crítica de persistência para produção.")
     st.subheader("Backup institucional")

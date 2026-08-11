@@ -23,4 +23,4 @@ with session_scope() as s:
     for a in rows:
         stu=s.get(Student,a.student_id)
         data.append({"Profissional":a.profissional_id,"GRR":stu.grr if stu else "","Nome":stu.nome if stu else "","Complexidade operacional":a.complexidade,"Motivo":a.motivo_balanceamento})
-st.dataframe(pd.DataFrame(data),use_container_width=True,hide_index=True)
+st.dataframe(pd.DataFrame(data),width="stretch",hide_index=True)

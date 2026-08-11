@@ -5,6 +5,7 @@ from sqlalchemy import select
 from src.security.auth import require_login, require_role, logout_button
 from src.config.runtime import app_env, is_production
 from src.services.bootstrap_service import bootstrap_application
+from src.ui.ux import inject_app_css
 
 
 def page_setup(title: str, allowed_roles: tuple[str, ...] | None = None):
@@ -23,6 +24,7 @@ def page_setup(title: str, allowed_roles: tuple[str, ...] | None = None):
         else:
             st.info("Verifique DATABASE_URL / Streamlit Secrets e reinicie o aplicativo.")
         st.stop()
+    inject_app_css()
     user = require_role(*allowed_roles) if allowed_roles else require_login()
     st.title(title)
     st.caption(f"Usuário: {user['display_name']} • Perfil: {user['role']} • Ambiente: {app_env()}")
@@ -47,7 +49,7 @@ def model_table(model, title=None, limit=500):
     with session_scope() as session:
         rows = list(session.scalars(select(model).limit(limit)))
         data = [{c.name: getattr(r, c.name) for c in model.__table__.columns} for r in rows]
-    st.dataframe(pd.DataFrame(data), use_container_width=True, hide_index=True)
+    st.dataframe(pd.DataFrame(data), width="stretch", hide_index=True)
 
 
 def select_student(session):
